@@ -1,28 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="createBuilding">Create a new building!</button>
+    <div v-if="create">
+      <input v-model="form['floors']" placeholder="How many floors" type="number" />
+      <input v-model="form['elevators']" placeholder="how many elevators?" type="number" />
+      <button @click="start">TEST</button>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Elevator from "./elevator";
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      create: false,
+      form: {}
+    };
+  },
+  methods: {
+    start() {
+      const elevator = new Elevator(+this.form.floors, +this.form.elevators);
+      elevator.callElevator(0, 10);
+    },
+    getData() {
+      console.log(this.form);
+    },
+
+    createBuilding() {
+      this.create = true;
+    }
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
