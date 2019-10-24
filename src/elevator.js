@@ -14,7 +14,8 @@ export default class ElevatorSystem {
     freeElevators.sort((a, b) => a.onFloor - toFloor < b.onFloor - toFloor);
 
     bestChoice = freeElevators[0];
-    console.log(bestChoice);
+    bestChoice.onFloor = toFloor;
+
     return { elevator: bestChoice, toFloor: toFloor };
   }
 
