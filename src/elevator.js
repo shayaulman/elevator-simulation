@@ -1,4 +1,4 @@
-export default class Elevator {
+export default class ElevatorSystem {
   constructor(numOfFloors, numOfElevators) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
@@ -6,19 +6,16 @@ export default class Elevator {
     this.elevators = this.initElevators();
   }
 
-  callElevator(fromFloor, toFloor) {
+  callElevator(toFloor) {
     let bestChoice;
     const freeElevators = this.elevators.filter(
       elevator => !elevator.isEngaged
     );
-    freeElevators.sort(
-      (a, b) => fromFloor - a.onFloor - (fromFloor - b.onFloor)
-    );
+    freeElevators.sort((a, b) => a.onFloor - toFloor < b.onFloor - toFloor);
 
-    console.log(freeElevators);
     bestChoice = freeElevators[0];
-
-    return { elevator: bestChoice, fromFloor: fromFloor, toFloor: toFloor };
+    console.log(bestChoice);
+    return { elevator: bestChoice, toFloor: toFloor };
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
@@ -33,7 +30,11 @@ export default class Elevator {
   initElevators() {
     let elevators = [];
     for (let i = 0; i < this.numOfElevators; i++) {
-      elevators[i] = { num: i, onFloor: 0, isEngaged: false };
+      elevators[i] = {
+        num: i,
+        onFloor: Math.floor(Math.random() * this.numOfFloors),
+        isEngaged: false
+      };
     }
     return elevators;
   }
