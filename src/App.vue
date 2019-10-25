@@ -7,6 +7,9 @@
       <span>Elevators</span>
       <button @click="addElevator()">+</button>
       <button @click="removeElevator()">-</button>
+      <span>Floor</span>
+      <span>Height</span>
+      <input @input="updateFloorHeight($event.target.value)" value="40" type="number" />
     </div>
 
     <div class="container">
@@ -68,6 +71,9 @@ export default {
     },
     removeElevator() {
       this.elevatorSystem.numOfElevators--;
+    },
+    updateFloorHeight(updatedHeight) {
+      this.height = updatedHeight;
     }
   },
 
@@ -117,6 +123,10 @@ export default {
     &:hover {
       opacity: 0.8;
     }
+  }
+
+  input {
+    width: 44px;
   }
 }
 </style>
