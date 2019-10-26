@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    elevatorSystem: new ElevatorSystem(12, 5)
+    elevatorSystem: new ElevatorSystem(7, 4)
   },
   mutations: {}
 });

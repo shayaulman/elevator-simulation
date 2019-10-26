@@ -34,6 +34,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   position: fixed;
+  padding: 5px;
   left: 0;
   top: 10vh;
   height: 45vh;
@@ -42,16 +43,17 @@ export default {
   z-index: 1;
   .floor-info {
     color: var(--color-2);
+    text-align: center;
     background-color: var(--color-1);
     border-radius: 3px;
     margin: 3px 6px;
-    padding: 12px 18px;
-    font-size: 24px;
+    padding: 6px 9px;
+    font-size: 16px;
   }
   button {
     margin: 3px 6px;
-    padding: 12px 18px;
-    font-size: 24px;
+    padding: 6px 9px;
+    font-size: 16px;
     color: var(--color-2);
     background-color: var(--color-1);
     border: none;
@@ -69,11 +71,12 @@ export default {
   }
   span {
     text-align: center;
+    font-size: 12px;
   }
   input {
     margin: auto;
 
-    width: 60px;
+    width: 40px;
     border: none;
     border-radius: 3px;
     padding: 6px;
