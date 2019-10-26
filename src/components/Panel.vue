@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="panel">
     <p class="floor-info">{{elevatorSystem.numOfFloors-1}}</p>
     <span>Floors</span>
     <button @click="elevatorSystem.addFloor()">+</button>
@@ -9,7 +9,12 @@
     <button @click="elevatorSystem.removeElevator()">-</button>
     <span>Floor</span>
     <span>Height</span>
-    <input @input="elevatorSystem.updateFloorHeight($event.target.value)" value="40" type="number" />
+    <input
+      @input="elevatorSystem.updateFloorHeight($event.target.value)"
+      value="40"
+      min="30"
+      type="number"
+    />
   </div>
 </template>
 
@@ -19,15 +24,12 @@ export default {
     return {
       elevatorSystem: this.$store.state.elevatorSystem
     };
-  },
-  created() {
-    console.log(this.elevatorSystem);
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.sidebar {
+.panel {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -59,6 +61,10 @@ export default {
     &:hover {
       background-color: var(--color-1-light);
       transition: 0.5s ease-in-out;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
   span {

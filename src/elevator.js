@@ -5,19 +5,18 @@ export default class ElevatorSystem {
     this.floorHeight = 40;
     this.msEachFloor = 500;
     this.elevators = this.initElevators();
+    this.i = 0;
   }
 
   callElevator(toFloor) {
-    let bestChoice;
-    const freeElevators = this.elevators.filter(
-      elevator => !elevator.isEngaged
-    );
-    freeElevators.sort((a, b) => a.onFloor - toFloor < b.onFloor - toFloor);
+    let freeElevators = this.elevators
+      .filter(elevator => !elevator.isEngaged)
+      .sort((a, b) => {
+        return a.onFloor - toFloor < 0 ? a.onFloor - b.onFloor : -1;
+      });
+    console.log(freeElevators);
 
-    bestChoice = freeElevators[0];
-    bestChoice.onFloor = toFloor;
-
-    return { elevator: bestChoice, toFloor: toFloor };
+    freeElevators[0].onFloor = toFloor;
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
@@ -35,7 +34,7 @@ export default class ElevatorSystem {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
-        isEngaged: false
+        isEngaged: Math.random() < 0.3 ? true : false
       };
     }
     return elevators;

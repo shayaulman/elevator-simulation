@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Sidebar />
+    <Panel />
     <div class="container">
       <Elevator
         v-for="(elevator,i) in elevatorSystem.elevators"
@@ -10,15 +10,18 @@
         :floorHeight="elevatorSystem.floorHeight"
         :floor="elevatorSystem.floorHeight * elevator.onFloor"
         :control="elevator.onFloor"
+        :engaged="elevator.isEngaged"
         ref="elev"
       />
+      <ElevatorButtons />
     </div>
   </div>
 </template>
 
 <script>
-import Sidebar from "./components/Sidebar";
+import Panel from "./components/Panel";
 import Elevator from "./components/Elevator";
+import ElevatorButtons from "./components/ElevatorButtons";
 
 export default {
   data() {
@@ -27,8 +30,9 @@ export default {
     };
   },
   components: {
-    Sidebar,
-    Elevator
+    Panel,
+    Elevator,
+    ElevatorButtons
   }
 };
 </script>
@@ -39,7 +43,7 @@ export default {
   margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  // justify-content: flex-end;
 }
 
 .container {

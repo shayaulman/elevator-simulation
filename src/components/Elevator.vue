@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <div class="control">{{control}}</div>
+    <div class="control" :class="{ engaged: engaged }">
+      <strong>{{control}}</strong>
+    </div>
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="{height: buildingHeight + 'px'}">
         <div
@@ -17,7 +19,7 @@
 
 <script>
 export default {
-  props: ["buildingHeight", "floorHeight", "floor", "control"],
+  props: ["buildingHeight", "floorHeight", "floor", "engaged", "control"],
   data() {
     return {
       elevatorSystem: this.$store.state.elevatorSystem
@@ -48,13 +50,17 @@ export default {
 
   .control {
     margin: 12px auto;
-
+    height: 38px;
     background-color: var(--color-1-light);
     padding: 8px 40px;
     border-radius: 3px;
     text-align: center;
     color: var(--color-3);
     font-size: 16px;
+  }
+
+  .engaged {
+    border: 0.8px solid red;
   }
 }
 
@@ -77,6 +83,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
+  transition: all 0.5s ease-in;
 }
 
 .right-door,
