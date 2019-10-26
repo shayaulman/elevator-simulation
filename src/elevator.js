@@ -2,6 +2,7 @@ export default class ElevatorSystem {
   constructor(numOfFloors, numOfElevators) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
+    this.floorHeight = 40;
     this.msEachFloor = 500;
     this.elevators = this.initElevators();
   }
@@ -42,5 +43,31 @@ export default class ElevatorSystem {
   timeToTravel(fromFloor, toFloor, msEachFloor) {
     const increasing = [fromFloor, toFloor].sort((a, b) => a - b);
     return increasing[1] - increasing[0] * msEachFloor;
+  }
+
+  addElevator() {
+    this.elevators.push({
+      num: this.elevators.length,
+      onFloor: Math.floor(Math.random() * this.numOfFloors),
+      isEngaged: false
+    });
+  }
+
+  removeElevator() {
+    this.elevators.pop();
+  }
+
+  addFloor() {
+    this.numOfFloors++;
+  }
+
+  removeFloor() {
+    this.numOfFloors--;
+  }
+
+  updateFloorHeight(updatedHeight) {
+    console.log("test");
+    this.floorHeight = updatedHeight;
+    console.log(this.floorHeight);
   }
 }
