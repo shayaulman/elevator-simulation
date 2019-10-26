@@ -12,7 +12,13 @@ export default class ElevatorSystem {
     let freeElevators = this.elevators
       .filter(elevator => !elevator.isEngaged)
       .sort((a, b) => {
-        return a.onFloor - toFloor < 0 ? a.onFloor - b.onFloor : -1;
+        if (a.onFloor - toFloor < 0) {
+          return -1;
+        } else if (b.onFloor - toFloor > 0) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
     console.log(freeElevators);
 
