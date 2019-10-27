@@ -13,6 +13,10 @@ export default class ElevatorSystem {
     );
 
     const closest = freeElevators.sort((a, b) => {
+      if (Math.abs(a.onFloor - toFloor) === Math.abs(b.onFloor - toFloor)) {
+        return b.onFloor - a.onFloor;
+      }
+
       return Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor);
     })[0];
 
