@@ -6,8 +6,8 @@
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="elevatorHeight">
         <div class="room" :style="roomHeight">
-          <div class="left-door"></div>
-          <div class="right-door" :class="[state === 'closing' ? 'closing' : 'opening']"></div>
+          <div class="left-door" :class="[state === 'opening' ? 'open' : '']"></div>
+          <div class="right-door" :class="[state === 'opening' ? 'open' : '']"></div>
         </div>
       </div>
     </div>
@@ -103,21 +103,20 @@ export default {
   background-color: var(--color-1);
   bottom: 0;
   z-index: 1;
+  transition: all 1s ease-in;
+}
+
+.open {
+  width: 2%;
+  transition: all 1s ease-in;
 }
 .goingUp,
 .goingDown {
-  animation: blink2 0.5s step-end infinite alternate;
-  border: 1px solid transparent;
+  animation: blink-traveling 0.5s step-end infinite alternate;
 }
 
 .arrived {
-  border: 0.8px solid green;
-}
-
-@keyframes blink2 {
-  50% {
-    border-color: red;
-  }
+  animation: blink-arrived 1s step-end infinite alternate;
 }
 </style>
 

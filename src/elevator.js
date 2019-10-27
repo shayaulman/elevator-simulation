@@ -32,22 +32,19 @@ export default class ElevatorSystem {
       elevator.state = "goingUp";
     } else {
       elevator.state = "arrived";
-      setTimeout(() => (elevator.state = "free"), 1000);
+      setTimeout(() => (elevator.state = "opening"), 500);
     }
 
-    // let msToMovePx = this.msEachFloor / this.floorHeight; // this.getDistance(fromFloor, toFloor)
     if (elevator.onFloor === toFloor) {
       console.log(elevator.onFloor, fromFloor);
       return;
     }
+
     //wait 1/2 second to indicate call of elevator
     const move = setInterval(() => {
-      console.log(elevator.onFloor);
-      console.log(+elevator.onFloor.toFixed(), toFloor);
       if (elevator.state === "goingUp") {
         elevator.onFloor += 0.1;
       } else {
-        //if (elevator.state === "goingDown")
         elevator.onFloor -= 0.1;
       }
 
@@ -55,7 +52,8 @@ export default class ElevatorSystem {
         elevator.onFloor = +elevator.onFloor.toFixed();
         clearInterval(move);
         elevator.state = "arrived";
-        setTimeout(() => (elevator.state = "free"), 1000);
+        setTimeout(() => (elevator.state = "opening"), 500);
+        setTimeout(() => (elevator.state = "free"), 3000);
       }
     }, 100);
     console.log("arrrived");
@@ -71,7 +69,7 @@ export default class ElevatorSystem {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
-        state: "free" // 'goingUp', 'goingDown', ''open', opening', 'closing'
+        state: "free" // 'goingUp', 'goingDown', 'open', opening', 'closing'
       };
     }
     return elevators;

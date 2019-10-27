@@ -22,27 +22,37 @@ body {
 
 }
 
-// Animation
-@keyframes placeHolderShimmer {
-  0% {
-    background-position: -368px 0
+@keyframes blink-traveling {
+  50% {
+    border: 0.8px solid red;
   }
-
-  100% {
-    background-position: 368px 0
-  }
-
 }
 
-.animated-background {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: #F6F6F6;
-  background: linear-gradient(to right, var(--color-2-op) 8%, var(--color-2) 18%, var(--color-2) 100%);
-  background-size: 800px 104px;
-  // height: 96px;
-  position: relative;
+@keyframes blink-arrived {
+  25% {
+    border: 0.8px solid green;
+  }
+
+  30% {
+    border: 0.8px solid transparent
+  }
+
+  35% {
+    border: 0.8px solid green;
+  }
+
+  50% {
+    border: 0.8px solid transparent
+  }
+
+  55% {
+    border: 0.8px green;
+  }
+
+
+
+  100% {
+    border: 0.8px solid transparent
+  }
+
 }

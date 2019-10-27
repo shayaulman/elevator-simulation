@@ -39,7 +39,7 @@ export default {
     background-color: var(--color-1);
     border: none;
     color: var(--color-3);
-    font-size: 24px;
+    font-size: 20px;
     border: 1px solid var(--color-3-op);
 
     &:hover {
