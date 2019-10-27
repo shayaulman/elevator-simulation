@@ -6,8 +6,15 @@
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="elevatorHeight">
         <div class="room" :style="roomHeight">
-          <div class="left-door" :class="[state === 'opening' ? 'open' : '']"></div>
-          <div class="right-door" :class="[state === 'opening' ? 'open' : '']"></div>
+          <input
+            v-if="state === 'open'"
+            class="floor-input"
+            @input="elevatorSystem.getUserInput(num, $event.target.value)"
+            type="number"
+            autofocus
+          />
+          <div class="left-door" :class="[state === 'open' ? 'open' : '']"></div>
+          <div class="right-door" :class="[state === 'open' ? 'open' : '']"></div>
         </div>
       </div>
     </div>
@@ -17,6 +24,7 @@
 <script>
 export default {
   props: {
+    num: Number,
     buildingHeight: Number,
     floorHeight: Number,
     floor: Number,
@@ -106,8 +114,22 @@ export default {
   transition: all 1s ease-in;
 }
 
+.floor-input {
+  // margin: auto;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  background-color: var(--color-2-op);
+  border: none;
+  border-radius: 3px;
+  transition: all 0.5s ease-in;
+}
+
 .open {
-  width: 2%;
+  width: 4%;
   transition: all 1s ease-in;
 }
 .goingUp,

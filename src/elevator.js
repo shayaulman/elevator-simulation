@@ -32,11 +32,11 @@ export default class ElevatorSystem {
       elevator.state = "goingUp";
     } else {
       elevator.state = "arrived";
-      setTimeout(() => (elevator.state = "opening"), 500);
+      setTimeout(() => (elevator.state = "open"), 500);
     }
 
     if (elevator.onFloor === toFloor) {
-      console.log(elevator.onFloor, fromFloor);
+      setTimeout(() => (elevator.state = "free"), 5000);
       return;
     }
 
@@ -52,7 +52,7 @@ export default class ElevatorSystem {
         elevator.onFloor = +elevator.onFloor.toFixed();
         clearInterval(move);
         elevator.state = "arrived";
-        setTimeout(() => (elevator.state = "opening"), 500);
+        setTimeout(() => (elevator.state = "open"), 500);
         setTimeout(() => (elevator.state = "free"), 3000);
       }
     }, 100);
@@ -69,15 +69,14 @@ export default class ElevatorSystem {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
-        state: "free" // 'goingUp', 'goingDown', 'open', opening', 'closing'
+        state: "free" // 'goingUp', 'goingDown', open', 'closing'
       };
     }
     return elevators;
   }
 
-  timeToTravel(fromFloor, toFloor, msEachFloor) {
-    const increasing = [fromFloor, toFloor].sort((a, b) => a - b);
-    return increasing[1] - increasing[0] * msEachFloor;
+  getUserInput(elevator, input) {
+    console.log(elevator, input);
   }
 
   addElevator() {
