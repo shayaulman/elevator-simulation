@@ -20,8 +20,7 @@
         :floorHeight="elevatorSystem.floorHeight"
         :floor="elevatorSystem.floorHeight * elevator.onFloor"
         :control="elevator.onFloor"
-        :engaged="elevator.isEngaged"
-        :stateOfDoors="elevator.doors"
+        :state="elevator.state"
       />
       <ElevatorButtons />
     </div>

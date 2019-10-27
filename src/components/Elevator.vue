@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <div class="control" :class="{ engaged: engaged }">
-      <strong>{{control}}</strong>
+    <div class="control" :class="state">
+      <strong>{{ control.toFixed() }}</strong>
     </div>
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="elevatorHeight">
         <div class="room" :style="roomHeight">
-          <div class="left-door" :class="stateOfDoors"></div>
-          <div class="right-door" :class="stateOfDoors"></div>
+          <div class="left-door"></div>
+          <div class="right-door" :class="[state === 'closing' ? 'closing' : 'opening']"></div>
         </div>
       </div>
     </div>
@@ -20,9 +20,8 @@ export default {
     buildingHeight: Number,
     floorHeight: Number,
     floor: Number,
-    engaged: Boolean,
-    control: Number,
-    stateOfDoors: String
+    state: String,
+    control: Number
   },
 
   data() {
@@ -74,10 +73,6 @@ export default {
     color: var(--color-3);
     font-size: 16px;
   }
-
-  .engaged {
-    border: 0.8px solid red;
-  }
 }
 
 .elevator-con {
@@ -98,11 +93,7 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  overflow: hidden;
-  transition: all 0.5s ease-in;
-}
-
-.opening {
+  transition: all 0.1s ease-in;
 }
 
 .right-door,
@@ -112,6 +103,21 @@ export default {
   background-color: var(--color-1);
   bottom: 0;
   z-index: 1;
+}
+.goingUp,
+.goingDown {
+  animation: blink2 0.5s step-end infinite alternate;
+  border: 1px solid transparent;
+}
+
+.arrived {
+  border: 0.8px solid green;
+}
+
+@keyframes blink2 {
+  50% {
+    border-color: red;
+  }
 }
 </style>
 
