@@ -35,12 +35,12 @@ export default {
   align-items: center;
   button {
     margin: 1px;
-    padding: 8px;
+    // padding: 8p  x;
     background-color: var(--color-1);
     border: none;
-    color: var(--color-3-op);
+    color: var(--color-3);
     font-size: 24px;
-    // border: 1px solid var(--color-3-op);
+    border: 1px solid var(--color-3-op);
 
     &:hover {
       color: var(--color-2);
@@ -49,6 +49,7 @@ export default {
 
     &:focus {
       outline: none;
+      border: 1px solid var(--color-2);
     }
   }
 }

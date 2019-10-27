@@ -36,11 +36,12 @@ export default {
   position: fixed;
   padding: 5px;
   left: 0;
-  top: 10vh;
-  height: 45vh;
+  top: 5vh;
+  height: 40vh;
   background-color: var(--color-3);
   border-radius: 0 6px 6px 0;
   z-index: 1;
+
   .floor-info {
     color: var(--color-2);
     text-align: center;

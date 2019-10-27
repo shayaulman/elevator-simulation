@@ -3,29 +3,34 @@ export default class ElevatorSystem {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
     this.floorHeight = 40;
-    this.msEachFloor = 500;
+    this.msEachFloor = 1500;
     this.elevators = this.initElevators();
-    this.i = 0;
   }
 
   callElevator(toFloor) {
-    let freeElevators = this.elevators
-      .filter(elevator => !elevator.isEngaged)
-      .sort((a, b) => {
-        return a.onFloor - toFloor < 0 ? a.onFloor - b.onFloor : -1;
-      });
-    console.log(freeElevators);
+    const freeElevators = this.elevators.filter(
+      elevator => !elevator.isEngaged
+    );
 
-    freeElevators[0].onFloor = toFloor;
+    const closest = freeElevators.sort((a, b) => {
+      return Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor);
+    })[0];
+
+    this.goToFloor(closest, closest.onFloor, toFloor);
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
-    this.elevators[elevator.num].isEngaged = true;
-
+    elevator.isEngaged = true;
+    elevator.doors = "opening";
+    //wait 1/2 second to indicate call of elevator
     setTimeout(() => {
-      this.elevators[elevator.num].onFloor = toFloor;
-      this.elevators[elevator.num].isEngaged = false;
-    }, this.timeToTravel(fromFloor, toFloor, this.msEachFloor));
+      elevator.onFloor = toFloor;
+      elevator.isEngaged = false;
+    }, 333);
+  }
+
+  getDistance(from, to, floorHeight) {
+    Math.abs(from - to) * floorHeight;
   }
 
   initElevators() {
@@ -34,7 +39,9 @@ export default class ElevatorSystem {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
-        isEngaged: Math.random() < 0.3 ? true : false
+        isEngaged: false,
+        traveling: false,
+        doors: "closed" // 'closing', 'opening'
       };
     }
     return elevators;
@@ -48,7 +55,9 @@ export default class ElevatorSystem {
     this.elevators.push({
       num: this.elevators.length,
       onFloor: Math.floor(Math.random() * this.numOfFloors),
-      isEngaged: false
+      isEngaged: false,
+      traveling: false,
+      doors: "closed"
     });
   }
 
@@ -65,8 +74,6 @@ export default class ElevatorSystem {
   }
 
   updateFloorHeight(updatedHeight) {
-    console.log("test");
     this.floorHeight = updatedHeight;
-    console.log(this.floorHeight);
   }
 }

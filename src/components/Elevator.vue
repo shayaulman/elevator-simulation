@@ -4,13 +4,10 @@
       <strong>{{control}}</strong>
     </div>
     <div class="elevator-con" ref="con" :style="shaftStyle">
-      <div class="elevator" :style="{height: buildingHeight + 'px'}">
-        <div
-          class="room"
-          :style="{ height: elevatorSystem.floorHeight + 'px', bottom: floor + 'px' }"
-        >
-          <div class="left-door"></div>
-          <div class="right-door"></div>
+      <div class="elevator" :style="elevatorHeight">
+        <div class="room" :style="roomHeight">
+          <div class="left-door" :class="stateOfDoors"></div>
+          <div class="right-door" :class="stateOfDoors"></div>
         </div>
       </div>
     </div>
@@ -19,7 +16,15 @@
 
 <script>
 export default {
-  props: ["buildingHeight", "floorHeight", "floor", "engaged", "control"],
+  props: {
+    buildingHeight: Number,
+    floorHeight: Number,
+    floor: Number,
+    engaged: Boolean,
+    control: Number,
+    stateOfDoors: String
+  },
+
   data() {
     return {
       elevatorSystem: this.$store.state.elevatorSystem
@@ -37,6 +42,17 @@ export default {
           var(--color-2-op) ${this.elevatorSystem.floorHeight * 2}px
         )`
       };
+    },
+    elevatorHeight() {
+      return {
+        height: `${this.buildingHeight}px`
+      };
+    },
+    roomHeight() {
+      return {
+        height: `${this.elevatorSystem.floorHeight}px`,
+        bottom: `${this.floor}px`
+      };
     }
   },
   methods: {}
@@ -52,7 +68,7 @@ export default {
     margin: 12px auto;
     height: 38px;
     background-color: var(--color-1-light);
-    padding: 8px 40px;
+    padding: 8px 25px;
     border-radius: 3px;
     text-align: center;
     color: var(--color-3);
@@ -66,14 +82,14 @@ export default {
 
 .elevator-con {
   position: relative;
-  min-width: 180px;
+  min-width: 120px;
   background-color: var(--color-2);
 }
 
 .elevator {
   position: absolute;
   margin: 0 35%;
-  width: 30%;
+  width: 35%;
   background-color: var(--color-3);
 }
 
@@ -86,9 +102,12 @@ export default {
   transition: all 0.5s ease-in;
 }
 
+.opening {
+}
+
 .right-door,
 .left-door {
-  width: 48.8%;
+  width: 49%;
   height: 100%;
   background-color: var(--color-1);
   bottom: 0;
