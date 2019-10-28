@@ -11,7 +11,7 @@
             class="floor-input"
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
-            @click="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
+            @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
             min="0"
             :max="elevatorSystem.numOfFloors"
           />
@@ -102,7 +102,7 @@ export default {
     text-align: center;
     color: var(--color-1);
     border-radius: 50%;
-    background-color: var(--color-3);
+    background-color: var(--color-3-op);
   }
 }
 
