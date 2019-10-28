@@ -53,4 +53,7 @@ export default {
     }
   }
 }
+.open {
+  animation: blink-traveling 0.5s step-end infinite alternate;
+}
 </style>

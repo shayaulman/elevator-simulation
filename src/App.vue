@@ -15,8 +15,7 @@
       <Elevator
         v-for="(elevator,i) in elevatorSystem.elevators"
         :key="i"
-        class="con"
-        :num="$index"
+        :index="i"
         :buildingHeight="elevatorSystem.floorHeight * elevatorSystem.numOfFloors"
         :floorHeight="elevatorSystem.floorHeight"
         :floor="elevatorSystem.floorHeight * elevator.onFloor"

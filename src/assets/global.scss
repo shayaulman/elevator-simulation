@@ -28,31 +28,40 @@ body {
   }
 }
 
-@keyframes blink-arrived {
-  25% {
-    border: 0.8px solid green;
-  }
+// @keyframes blink-arrived {
+//   25% {
+//     border: 0.8px solid green;
+//   }
 
-  30% {
-    border: 0.8px solid transparent
-  }
+//   30% {
+//     border: 0.8px solid transparent
+//   }
 
-  35% {
-    border: 0.8px solid green;
-  }
+//   35% {
+//     border: 0.8px solid green;
+//   }
 
-  50% {
-    border: 0.8px solid transparent
-  }
+//   50% {
+//     border: 0.8px solid transparent
+//   }
 
-  55% {
-    border: 0.8px green;
-  }
+//   55% {
+//     border: 0.8px green;
+//   }
 
 
 
-  100% {
-    border: 0.8px solid transparent
-  }
+//   100% {
+//     border: 0.8px solid transparent
+//   }
 
+// }
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  cursor: pointer;
+  display: block;
+  width: 8px;
+  color: #333;
+  text-align: center;
+  position: relative;
 }

@@ -40,7 +40,7 @@ export default {
   height: 40vh;
   background-color: var(--color-3);
   border-radius: 0 6px 6px 0;
-  z-index: 1;
+  z-index: 3;
 
   .floor-info {
     color: var(--color-2);

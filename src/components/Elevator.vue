@@ -7,14 +7,21 @@
       <div class="elevator" :style="elevatorHeight">
         <div class="room" :style="roomHeight">
           <input
-            v-if="state === 'open'"
             class="floor-input"
-            @input="elevatorSystem.getUserInput(num, $event.target.value)"
             type="number"
-            autofocus
+            @focus="elevatorSystem.holdDoors(index)"
+            @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
+            min="0"
+            :max="elevatorSystem.numOfFloors"
           />
-          <div class="left-door" :class="[state === 'open' ? 'open' : '']"></div>
-          <div class="right-door" :class="[state === 'open' ? 'open' : '']"></div>
+          <div
+            class="left-door"
+            :class="[state === 'open' || state === 'waiting' ? 'open-doors' : '']"
+          ></div>
+          <div
+            class="right-door"
+            :class="[state === 'open' || state === 'waiting' ? 'open-doors' : '']"
+          ></div>
         </div>
       </div>
     </div>
@@ -24,7 +31,7 @@
 <script>
 export default {
   props: {
-    num: Number,
+    index: Number,
     buildingHeight: Number,
     floorHeight: Number,
     floor: Number,
@@ -102,6 +109,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   transition: all 0.1s ease-in;
+  z-index: 1;
 }
 
 .right-door,
@@ -115,30 +123,31 @@ export default {
 }
 
 .floor-input {
-  // margin: auto;
+  padding: 8px;
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   background-color: var(--color-2-op);
   border: none;
   border-radius: 3px;
   transition: all 0.5s ease-in;
 }
 
-.open {
+.open-doors {
   width: 4%;
   transition: all 1s ease-in;
 }
+.free .open {
+  border: 0.8px solid transparent;
+}
+
 .goingUp,
 .goingDown {
   animation: blink-traveling 0.5s step-end infinite alternate;
 }
 
 .arrived {
-  animation: blink-arrived 1s step-end infinite alternate;
+  border: 0.8px solid green;
 }
 </style>
 

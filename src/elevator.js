@@ -3,7 +3,6 @@ export default class ElevatorSystem {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
     this.floorHeight = 35;
-    this.msEachFloor = 1000;
     this.elevators = this.initElevators();
   }
 
@@ -20,12 +19,15 @@ export default class ElevatorSystem {
 
       return Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor);
     })[0];
-    console.log(this.elevators);
 
     this.goToFloor(closest, closest.onFloor, toFloor);
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
+    if (toFloor > this.numOfFloors || toFloor < 0) {
+      alert("Please enter a valid option");
+      return false;
+    }
     if (fromFloor > toFloor) {
       elevator.state = "goingDown";
     } else if (fromFloor < toFloor) {
@@ -36,7 +38,7 @@ export default class ElevatorSystem {
     }
 
     if (elevator.onFloor === toFloor) {
-      setTimeout(() => (elevator.state = "free"), 5000);
+      setTimeout(() => this.updateElevatorState(elevator), 5000);
       return;
     }
 
@@ -56,7 +58,6 @@ export default class ElevatorSystem {
         setTimeout(() => (elevator.state = "free"), 3000);
       }
     }, 100);
-    console.log("arrrived");
   }
 
   getDistance(from, to, floorHeight) {
@@ -69,15 +70,28 @@ export default class ElevatorSystem {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
-        state: "free" // 'goingUp', 'goingDown', open', 'closing'
+        state: "free" // 'goingUp', 'goingDown', 'open', 'closing',
       };
     }
     return elevators;
   }
 
-  getUserInput(elevator, input) {
-    console.log(elevator, input);
+  updateElevatorState(elevator) {
+    if (elevator.state !== "waiting") elevator.state = "free";
   }
+
+  holdDoors(i) {
+    this.elevators[i].state = "waiting";
+  }
+
+  closeDoorsAndGo(i, toFloor) {
+    this.elevators[i].state = "free";
+    setTimeout(() => {
+      this.goToFloor(this.elevators[i], this.elevators[i].onFloor, +toFloor);
+    }, 500);
+  }
+
+  /*  UI state handlers  */
 
   addElevator() {
     this.elevators.push({
