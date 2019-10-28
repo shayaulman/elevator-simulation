@@ -6,8 +6,28 @@ export default class ElevatorSystem {
     this.elevators = this.initElevators();
   }
 
+  initElevators() {
+    let elevators = [];
+    for (let i = 0; i < this.numOfElevators; i++) {
+      elevators[i] = {
+        num: i,
+        onFloor: Math.floor(Math.random() * this.numOfFloors),
+        target: "",
+        state: "free" // 'goingUp', 'goingDown', 'open', 'closing',
+      };
+    }
+    return elevators;
+  }
+
   callElevator(toFloor) {
-    if (this.elevators.some(elevator => elevator.target === toFloor)) {
+    if (
+      this.elevators.some(
+        elevator =>
+          elevator.target === toFloor &&
+          elevator.state !== "goingDown" &&
+          elevator.state !== "goingUp"
+      )
+    ) {
       return false;
     }
 
@@ -49,6 +69,7 @@ export default class ElevatorSystem {
 
     //wait 1/2 second to indicate call of elevator
     const move = setInterval(() => {
+      elevator;
       if (elevator.state === "goingUp") {
         elevator.onFloor += 0.1;
       } else {
@@ -63,19 +84,6 @@ export default class ElevatorSystem {
         setTimeout(() => (elevator.state = "free"), 3000);
       }
     }, 100);
-  }
-
-  initElevators() {
-    let elevators = [];
-    for (let i = 0; i < this.numOfElevators; i++) {
-      elevators[i] = {
-        num: i,
-        onFloor: Math.floor(Math.random() * this.numOfFloors),
-        target: "",
-        state: "free" // 'goingUp', 'goingDown', 'open', 'closing',
-      };
-    }
-    return elevators;
   }
 
   updateElevatorState(elevator) {
