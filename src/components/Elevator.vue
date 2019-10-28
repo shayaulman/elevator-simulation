@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <p class="elevator-number">{{ index + 1 }}</p>
     <div class="control" :class="state">
       <strong>{{ control.toFixed() }}</strong>
     </div>
@@ -10,7 +11,7 @@
             class="floor-input"
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
-            @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
+            @click="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
             min="0"
             :max="elevatorSystem.numOfFloors"
           />
@@ -77,16 +78,31 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: center;
+  margin: 1px;
 
   .control {
-    margin: 12px auto;
-    height: 38px;
-    background-color: var(--color-1-light);
-    padding: 8px 25px;
+    // width: 40%;
+    margin: 12px 10%;
+    // height: 38px;
+    background-color: var(--color-1);
+    padding: 6px 20px;
     border-radius: 3px;
     text-align: center;
     color: var(--color-3);
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .elevator-number {
+    margin: 0 auto;
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 12px;
+    width: fit-content;
+    text-align: center;
+    color: var(--color-1);
+    border-radius: 50%;
+    background-color: var(--color-3);
   }
 }
 
@@ -131,13 +147,18 @@ export default {
   border: none;
   border-radius: 3px;
   transition: all 0.5s ease-in;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .open-doors {
   width: 4%;
   transition: all 1s ease-in;
 }
-.free .open {
+.free,
+.open {
   border: 0.8px solid transparent;
 }
 
