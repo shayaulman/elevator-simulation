@@ -88,7 +88,7 @@ export default class ElevatorSystem {
     this.elevators[i].state = "free";
     setTimeout(() => {
       this.goToFloor(this.elevators[i], this.elevators[i].onFloor, +toFloor);
-    }, 500);
+    }, 800);
   }
 
   /*  UI state handlers  */

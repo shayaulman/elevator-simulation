@@ -11,20 +11,21 @@
         </svg>
       </a>
     </div>
-    <button @click="test()">test</button>
-    <div class="roof" :style="roof"></div>
-    <div class="house" ref="house">
-      <Elevator
-        v-for="(elevator,i) in elevatorSystem.elevators"
-        :key="i"
-        :index="i"
-        :buildingHeight="elevatorSystem.floorHeight * elevatorSystem.numOfFloors"
-        :floorHeight="elevatorSystem.floorHeight"
-        :floor="elevatorSystem.floorHeight * elevator.onFloor"
-        :control="elevator.onFloor"
-        :state="elevator.state"
-      />
-      <ElevatorButtons />
+    <div class="house-container">
+      <div class="roof"></div>
+      <div class="house" ref="house">
+        <Elevator
+          v-for="(elevator,i) in elevatorSystem.elevators"
+          :key="i"
+          :index="i"
+          :buildingHeight="elevatorSystem.floorHeight * elevatorSystem.numOfFloors"
+          :floorHeight="elevatorSystem.floorHeight"
+          :floor="elevatorSystem.floorHeight * elevator.onFloor"
+          :control="elevator.onFloor"
+          :state="elevator.state"
+        />
+        <ElevatorButtons />
+      </div>
     </div>
   </div>
 </template>
@@ -45,24 +46,6 @@ export default {
     Panel,
     Elevator,
     ElevatorButtons
-  },
-
-  computed: {
-    roof() {
-      return {
-        width: `${this.houseWidth + this.houseWidth / 5}px`
-      };
-    }
-  },
-
-  methods: {
-    test() {
-      console.log(this.$refs.house.clientWidth);
-    }
-  },
-
-  mounted() {
-    this.houseWidth = this.$refs.house.clientWidth;
   }
 };
 </script>
@@ -78,18 +61,25 @@ export default {
   align-items: center;
 }
 
+.house-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .house {
   display: flex;
   width: fit-content;
   justify-content: center;
   background-color: var(--color-5);
-  padding: 5% 28px 2px 28px;
+  padding: 20px 28px 2px 28px;
 }
 
 .roof {
   margin: 1px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-5-dark);
   height: 30px;
+  width: 120%;
 }
 
 .github-link {

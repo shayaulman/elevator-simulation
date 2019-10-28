@@ -12,6 +12,7 @@
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
             @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
+            @input="elevatorSystem.holdDoors(index)"
             min="0"
             :max="elevatorSystem.numOfFloors"
           />
@@ -70,7 +71,11 @@ export default {
       };
     }
   },
-  methods: {}
+  methods: {
+    hello() {
+      console.log("hello");
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -82,9 +87,7 @@ export default {
   margin: 1px;
 
   .control {
-    // width: 40%;
     margin: 12px 10%;
-    // height: 38px;
     background-color: var(--color-1);
     padding: 6px 20px;
     border-radius: 3px;
@@ -100,7 +103,7 @@ export default {
     font-size: 12px;
     width: fit-content;
     text-align: center;
-    color: var(--color-1);
+    color: var(--color-5);
     border-radius: 50%;
     background-color: var(--color-3-op);
   }
@@ -158,7 +161,8 @@ export default {
   transition: all 1s ease-in;
 }
 .free,
-.open {
+.open,
+.waiting {
   border: 0.8px solid transparent;
 }
 
