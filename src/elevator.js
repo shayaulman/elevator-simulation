@@ -7,6 +7,10 @@ export default class ElevatorSystem {
   }
 
   callElevator(toFloor) {
+    if (this.elevators.some(elevator => elevator.target === toFloor)) {
+      return false;
+    }
+
     const freeElevators = this.elevators.filter(
       elevator => elevator.state === "free"
     );
@@ -19,12 +23,12 @@ export default class ElevatorSystem {
 
       return Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor);
     })[0];
-
+    closest.target = toFloor;
     this.goToFloor(closest, closest.onFloor, toFloor);
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
-    if (toFloor > this.numOfFloors || toFloor < 0) {
+    if (toFloor > this.numOfFloors - 1 || toFloor < 0) {
       alert("Please enter a valid option");
       return false;
     }
@@ -33,6 +37,7 @@ export default class ElevatorSystem {
     } else if (fromFloor < toFloor) {
       elevator.state = "goingUp";
     } else {
+      elevator.target = "";
       elevator.state = "arrived";
       setTimeout(() => (elevator.state = "open"), 500);
     }
@@ -60,16 +65,13 @@ export default class ElevatorSystem {
     }, 100);
   }
 
-  getDistance(from, to, floorHeight) {
-    Math.abs(from - to) * floorHeight;
-  }
-
   initElevators() {
     let elevators = [];
     for (let i = 0; i < this.numOfElevators; i++) {
       elevators[i] = {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
+        target: "",
         state: "free" // 'goingUp', 'goingDown', 'open', 'closing',
       };
     }
@@ -97,6 +99,7 @@ export default class ElevatorSystem {
     this.elevators.push({
       num: this.elevators.length,
       onFloor: Math.floor(Math.random() * this.numOfFloors),
+      target: "",
       state: "free"
     });
   }
