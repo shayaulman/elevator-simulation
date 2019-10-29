@@ -20,7 +20,7 @@ export default class ElevatorSystem {
   }
 
   callElevator(toFloor) {
-    this.elevators.forEach(e => console.log(e.state));
+    // this.elevators.forEach(e => console.log(e.state));
     if (
       this.elevators.filter(elevator => elevator.state === "free").length === 0
     ) {
@@ -60,6 +60,7 @@ export default class ElevatorSystem {
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
+    console.log(elevator);
     if (toFloor > this.numOfFloors - 1 || toFloor < 0) {
       alert(`There's only ${this.numOfFloors} floors in this building...`);
       this.holdDoors(elevator.num);
@@ -76,7 +77,7 @@ export default class ElevatorSystem {
     }
 
     if (elevator.onFloor === toFloor) {
-      setTimeout(() => this.updateElevatorState(elevator), 5000);
+      // setTimeout(() => this.updateElevatorState(elevator), 5000);
       return;
     }
 
@@ -87,6 +88,14 @@ export default class ElevatorSystem {
         elevator.onFloor += 0.1;
       } else {
         elevator.onFloor -= 0.1;
+      }
+
+      // bad approach fix
+      if (
+        elevator.onFloor.toFixed(6) === 0 ||
+        elevator.onFloor.toFixed(6) === this.numOfFloors
+      ) {
+        clearInterval(move);
       }
 
       if (+elevator.onFloor.toFixed(6) === toFloor) {

@@ -13,7 +13,9 @@
     </div>
     <div class="house-container">
       <div class="roof-1"></div>
-      <div class="roof-2"></div>
+      <div
+        class="roof-2"
+      >Still under development, unexpected and weird things can happen very frequently, working on that :)</div>
       <div class="house" ref="house">
         <Elevator
           v-for="(elevator,i) in elevatorSystem.elevators"
@@ -87,6 +89,11 @@ export default {
   background-color: var(--color-5-dark);
   height: 30px;
   width: 120%;
+  text-align: center;
+  color: var(--color-1);
+  font-size: 14px;
+  font-weight: 100;
+  padding: 4px;
 }
 
 .github-link {
