@@ -13,19 +13,24 @@ export default class ElevatorSystem {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
         target: "",
-        state: "free" // 'goingUp', 'goingDown', 'open', 'closing',
+        state: "free" // 'goingUp', 'goingDown', 'open',
       };
     }
     return elevators;
   }
 
   callElevator(toFloor) {
+    this.elevators.forEach(e => console.log(e.state));
+    if (
+      this.elevators.filter(elevator => elevator.state === "free").length === 0
+    ) {
+      console.log("no available elvators...");
+      return false;
+    }
+
     if (
       this.elevators.some(
-        elevator =>
-          elevator.target === toFloor &&
-          elevator.state !== "goingDown" &&
-          elevator.state !== "goingUp"
+        elevator => elevator.target === toFloor || elevator.state === "open" //||
       )
     ) {
       return false;
@@ -34,22 +39,34 @@ export default class ElevatorSystem {
     const freeElevators = this.elevators.filter(
       elevator => elevator.state === "free"
     );
+    const alreadyOnFloor = this.elevators.filter(
+      elevator => elevator.onFloor === toFloor
+    );
 
-    const closest = freeElevators.sort((a, b) => {
-      // prefer to bring down an elevator rather than up
-      if (Math.abs(a.onFloor - toFloor) === Math.abs(b.onFloor - toFloor)) {
-        return b.onFloor - a.onFloor;
-      }
+    const bestChoise =
+      alreadyOnFloor.length !== 0
+        ? alreadyOnFloor[0]
+        : freeElevators.sort((a, b) => {
+            // prefer to bring down an elevator rather than up
+            if (
+              Math.abs(a.onFloor - toFloor) === Math.abs(b.onFloor - toFloor)
+            ) {
+              return b.onFloor - a.onFloor;
+            }
 
-      return Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor);
-    })[0];
-    closest.target = toFloor;
-    this.goToFloor(closest, closest.onFloor, toFloor);
+            return (
+              Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor)
+            );
+          })[0];
+
+    bestChoise.target = toFloor;
+    this.goToFloor(bestChoise, bestChoise.onFloor, toFloor);
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
     if (toFloor > this.numOfFloors - 1 || toFloor < 0) {
-      alert("Please enter a valid option");
+      alert(`There's only ${this.numOfFloors} floors in this building...`);
+      this.holdDoors(elevator.num);
       return false;
     }
     if (fromFloor > toFloor) {
@@ -80,6 +97,7 @@ export default class ElevatorSystem {
         elevator.onFloor = +elevator.onFloor.toFixed();
         clearInterval(move);
         elevator.state = "arrived";
+        elevator.target = "";
         setTimeout(() => (elevator.state = "open"), 500);
         setTimeout(() => (elevator.state = "free"), 3000);
       }

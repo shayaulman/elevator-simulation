@@ -11,7 +11,7 @@
     <span>Height</span>
     <input
       @input="elevatorSystem.updateFloorHeight($event.target.value)"
-      value="40"
+      value="35"
       min="30"
       type="number"
     />

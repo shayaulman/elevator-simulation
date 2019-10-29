@@ -8,6 +8,10 @@
     >
       <button @click="elevatorSystem.callElevator(i)">&#9650;</button>
       <button @click="elevatorSystem.callElevator(i)">&#9660;</button>
+      <div class="info">
+        {{freeElevators}}
+        elevators to your service!
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +22,14 @@ export default {
     return {
       elevatorSystem: this.$store.state.elevatorSystem
     };
+  },
+
+  computed: {
+    freeElevators() {
+      return this.elevatorSystem.elevators.filter(
+        elevator => elevator.state === "free"
+      ).length;
+    }
   }
 };
 </script>
@@ -26,7 +38,7 @@ export default {
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-start;
-  margin-left: 10px;
+  margin-left: 6px;
 }
 
 .buttons {
@@ -35,11 +47,10 @@ export default {
   align-items: center;
   button {
     margin: 1px;
-    // padding: 8p  x;
     background-color: var(--color-1);
     border: none;
     color: var(--color-3);
-    font-size: 20px;
+    font-size: 10px;
     border: 1px solid var(--color-3-op);
 
     &:hover {
