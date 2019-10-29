@@ -13,7 +13,6 @@
             @focus="elevatorSystem.holdDoors(index)"
             @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
             @input.enter="elevatorSystem.holdDoors(index)"
-            @click="elevatorSystem.closeDoorsAndGo(index, $event.target.value)  "
             min="0"
             :max="elevatorSystem.numOfFloors"
           />

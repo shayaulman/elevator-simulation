@@ -118,9 +118,9 @@ export default class ElevatorSystem {
   }
 
   closeDoorsAndGo(i, toFloor) {
-    setTimeout(() => {
-      this.elevators[i].state = "free";
-    }, 3000);
+    // setTimeout(() => {
+    //   this.elevators[i].state = "free";
+    // }, 3000);
     if (toFloor === "") return;
     this.elevators[i].state = "free";
     setTimeout(() => {
