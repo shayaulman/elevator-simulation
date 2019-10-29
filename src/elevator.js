@@ -28,11 +28,7 @@ export default class ElevatorSystem {
       return false;
     }
 
-    if (
-      this.elevators.some(
-        elevator => elevator.target === toFloor || elevator.state === "open" //||
-      )
-    ) {
+    if (this.elevators.some(elevator => elevator.target === toFloor)) {
       return false;
     }
 
@@ -113,6 +109,10 @@ export default class ElevatorSystem {
   }
 
   closeDoorsAndGo(i, toFloor) {
+    setTimeout(() => {
+      this.elevators[i].state = "free";
+    }, 3000);
+    if (toFloor === "") return;
     this.elevators[i].state = "free";
     setTimeout(() => {
       this.goToFloor(this.elevators[i], this.elevators[i].onFloor, +toFloor);
