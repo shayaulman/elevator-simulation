@@ -12,12 +12,8 @@
       </a>
     </div>
     <div class="house-container">
-      <div class="chimney">
-        <div class="top"></div>
-        <div class="body"></div>
-      </div>
-
-      <div class="roof"></div>
+      <div class="roof-1"></div>
+      <div class="roof-2"></div>
       <div class="house" ref="house">
         <Elevator
           v-for="(elevator,i) in elevatorSystem.elevators"
@@ -80,35 +76,18 @@ export default {
   padding: 20px 28px 2px 28px;
 }
 
-.roof {
+.roof-1 {
+  background-color: var(--color-5-dark);
+  height: 14px;
+  width: 95%;
+}
+
+.roof-2 {
   margin: 1px;
   background-color: var(--color-5-dark);
   height: 30px;
-  width: 30px;
   width: 120%;
 }
-
-// .chimney {
-//   position: relative;
-//   margin-right: 98%;
-//   width: 5%;
-//   height: 50px;
-//   // background-color: var(--color-5-dark);
-
-//   .body {
-//     // position: absolute;
-//     width: 10px;
-//     height: 20px;
-//     left: 5%;
-
-//     .top {
-//       // position: absolute;
-//       width: 100%;
-//       height: 5px;
-//       background-color: var(--color-2);
-//     }
-//   }
-// }
 
 .github-link {
   position: fixed;

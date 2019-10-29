@@ -2,7 +2,7 @@ export default class ElevatorSystem {
   constructor(numOfFloors, numOfElevators) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
-    this.floorHeight = 35;
+    this.floorHeight = 30;
     this.elevators = this.initElevators();
   }
 
