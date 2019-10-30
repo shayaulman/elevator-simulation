@@ -8,14 +8,20 @@
       <div class="elevator" :style="elevatorHeight">
         <div class="room" :style="roomHeight">
           <input
+            placeholder="..."
             class="floor-input"
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
-            @focusout="elevatorSystem.closeDoorsAndGo(index, $event.target.value)"
-            @input.enter="elevatorSystem.holdDoors(index)"
+            @input="elevatorSystem.holdDoors(index, $event.target.value)"
             min="0"
-            :max="elevatorSystem.numOfFloors"
+            :max="elevatorSystem.numOfFloors-1"
           />
+          <div class="control-buttons">
+            <button class="increment" @click="increment()">&#9650;</button>
+            <button class="go-button" @click="goTo(index)">Go</button>
+            <button @click="decrement()" class="decrement">&#9660;</button>
+          </div>
+
           <div
             class="left-door"
             :class="[state === 'open' || state === 'waiting' ? 'open-doors' : '']"
@@ -72,8 +78,18 @@ export default {
     }
   },
   methods: {
-    hello() {
-      console.log("hello");
+    increment() {
+      this.$el.querySelector(".floor-input").stepUp();
+    },
+    decrement() {
+      this.$el.querySelector(".floor-input").stepDown();
+    },
+
+    goTo(i) {
+      this.elevatorSystem.closeDoorsAndGo(
+        i,
+        this.$el.querySelector(".floor-input").value
+      );
     }
   }
 };
@@ -129,6 +145,61 @@ export default {
   width: 100%;
   transition: all 0.1s ease-in;
   z-index: 1;
+
+  .control-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    overflow: hidden;
+
+    .go-button {
+      color: var(--color-3);
+      font-size: 10px;
+
+      &:hover {
+        color: var(--color-2);
+        transition: 0.2s ease-in-out;
+      }
+    }
+
+    button {
+      padding: 1px;
+      font-size: 9px;
+      text-align: center;
+      background-color: var(--color-1);
+      color: var(--color-2);
+      border: none;
+      cursor: pointer;
+    }
+
+    .increment,
+    .decrement {
+      opacity: 0.8;
+
+      &:hover {
+        color: var(--color-3);
+        transition: 0.2s ease-in-out;
+      }
+    }
+  }
+
+  .floor-input {
+    position: absolute;
+    padding: 6px 6px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-2-op);
+    border: none;
+    border-radius: 3px;
+    transition: all 0.5s ease-in;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
 .right-door,
@@ -139,21 +210,6 @@ export default {
   bottom: 0;
   z-index: 1;
   transition: all 1s ease-in;
-}
-
-.floor-input {
-  padding: 8px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-2-op);
-  border: none;
-  border-radius: 3px;
-  transition: all 0.5s ease-in;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 .open-doors {
@@ -173,6 +229,17 @@ export default {
 
 .arrived {
   border: 0.8px solid green;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 </style>
 

@@ -2,7 +2,7 @@ export default class ElevatorSystem {
   constructor(numOfFloors, numOfElevators) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
-    this.floorHeight = 30;
+    this.floorHeight = 40;
     this.elevators = this.initElevators();
   }
 
@@ -60,9 +60,8 @@ export default class ElevatorSystem {
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
-    console.log(elevator);
     if (toFloor > this.numOfFloors - 1 || toFloor < 0) {
-      alert(`There's only ${this.numOfFloors} floors in this building...`);
+      alert(`There's only ${this.numOfFloors - 1} floors in this building...`);
       this.holdDoors(elevator.num);
       return false;
     }
@@ -104,7 +103,7 @@ export default class ElevatorSystem {
         elevator.state = "arrived";
         elevator.target = "";
         setTimeout(() => (elevator.state = "open"), 500);
-        setTimeout(() => (elevator.state = "free"), 3000);
+        setTimeout(() => (elevator.state = "free"), 6000);
       }
     }, 100);
   }
@@ -113,19 +112,28 @@ export default class ElevatorSystem {
     if (elevator.state !== "waiting") elevator.state = "free";
   }
 
-  holdDoors(i) {
+  holdDoors(i, value) {
+    console.log(value);
     this.elevators[i].state = "waiting";
   }
 
   closeDoorsAndGo(i, toFloor) {
-    // setTimeout(() => {
-    //   this.elevators[i].state = "free";
-    // }, 3000);
+    console.log(toFloor);
+    // if ordered elevator and did'n use
+    setTimeout(() => {
+      this.closeDoors(i);
+    }, 10000);
     if (toFloor === "") return;
     this.elevators[i].state = "free";
     setTimeout(() => {
       this.goToFloor(this.elevators[i], this.elevators[i].onFloor, +toFloor);
     }, 800);
+  }
+
+  closeDoors(i) {
+    if (this.elevators[i].state === "waiting") {
+      this.elevators[i].state = "free";
+    }
   }
 
   /*  UI state handlers  */

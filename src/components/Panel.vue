@@ -10,8 +10,8 @@
     <span>Floor</span>
     <span>Height</span>
     <input
-      @input="elevatorSystem.updateFloorHeight($event.target.value)"
-      value="30"
+      @input="elevatorSystem.updateFloorHeight(+$event.target.value)"
+      value="40"
       min="30"
       type="number"
     />
@@ -37,7 +37,6 @@ export default {
   padding: 5px;
   left: 0;
   top: 5vh;
-  height: 40vh;
   background-color: var(--color-3);
   border-radius: 0 6px 6px 0;
   z-index: 3;

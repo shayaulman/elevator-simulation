@@ -35,43 +35,6 @@ body {
   }
 }
 
-// @keyframes blink-arrived {
-//   25% {
-//     border: 0.8px solid green;
-//   }
-
-//   30% {
-//     border: 0.8px solid transparent
-//   }
-
-//   35% {
-//     border: 0.8px solid green;
-//   }
-
-//   50% {
-//     border: 0.8px solid transparent
-//   }
-
-//   55% {
-//     border: 0.8px green;
-//   }
-
-
-
-//   100% {
-//     border: 0.8px solid transparent
-//   }
-
-// }
-// input[type=number]::-webkit-inner-spin-button {
-
-//   cursor: pointer;
-//   display: block;
-//   width: 8px;
-//   color: #333;
-//   text-align: center;
-//   position: relative;
-// }
 
 // show ALWAYAS spinner buttons (not only on hoce - Chrome)
 input[type=number]::-webkit-inner-spin-button {
