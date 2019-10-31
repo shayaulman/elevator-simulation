@@ -157,7 +157,7 @@ export default {
   height: 50vh;
   width: 100vh;
   background-size: 100% 100%;
-  //   z-index: -999;
+  z-index: -999;
 }
 
 .clouds {
