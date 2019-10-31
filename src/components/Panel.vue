@@ -36,7 +36,7 @@ export default {
   position: fixed;
   padding: 5px;
   left: 0;
-  top: 5vh;
+  bottom: 5vh;
   background-color: var(--color-3);
   border-radius: 0 6px 6px 0;
   z-index: 3;

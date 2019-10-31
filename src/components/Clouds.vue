@@ -171,10 +171,10 @@ export default {
   z-index: 100;
   fill: var(--color-1-light);
   /* Animation shorthand syntax order: name, duration, timing-function, delay, iteration-count, direction, fill-mode */
-  -webkit-animation: move 20s linear infinite;
-  -moz-animation: move 20s linear infinite;
-  -o-animation: move 20s linear infinite;
-  animation: move 20s linear infinite;
+  -webkit-animation: move 30s linear infinite;
+  -moz-animation: move 30s linear infinite;
+  -o-animation: move 30s linear infinite;
+  animation: move 30s linear infinite;
 }
 
 .cloud2 {
@@ -183,10 +183,10 @@ export default {
   opacity: 0.5;
   z-index: 200;
   fill: var(--color-1-light);
-  -webkit-animation: move 15s linear 10s infinite backwards;
-  -moz-animation: move 15s linear 10s infinite backwards;
-  -o-animation: move 15s linear 10s infinite backwards;
-  animation: move 15s linear 10s infinite backwards;
+  -webkit-animation: move 30s linear 10s infinite backwards;
+  -moz-animation: move 30s linear 10s infinite backwards;
+  -o-animation: move 30s linear 10s infinite backwards;
+  animation: move 30s linear 10s infinite backwards;
 }
 
 .cloud3 {
@@ -207,10 +207,10 @@ export default {
   opacity: 0.6q;
   z-index: 200;
   fill: var(--color-1-light);
-  -webkit-animation: move 25s linear 20s infinite backwards;
-  -moz-animation: move 25s linear 20s infinite backwards;
-  -o-animation: move 25s linear 20s infinite backwards;
-  animation: move 25s linear 20s infinite backwards;
+  -webkit-animation: move 40s linear 20s infinite backwards;
+  -moz-animation: move 40s linear 20s infinite backwards;
+  -o-animation: move 40s linear 20s infinite backwards;
+  animation: move 40s linear 20s infinite backwards;
 }
 
 .cloud5 {
@@ -219,10 +219,10 @@ export default {
   opacity: 0.3;
   z-index: 200;
   fill: var(--color-1-light);
-  -webkit-animation: move 18s linear 25s infinite backwards;
-  -moz-animation: move 18s linear 25s infinite backwards;
-  -o-animation: move 18s linear 25s infinite backwards;
-  animation: move 18s linear 25s infinite backwards;
+  -webkit-animation: move 50s linear 25s infinite backwards;
+  -moz-animation: move 50s linear 25s infinite backwards;
+  -o-animation: move 50s linear 25s infinite backwards;
+  animation: move 50s linear 25s infinite backwards;
 }
 
 .cloud6 {
@@ -230,10 +230,10 @@ export default {
   height: 90px;
   z-index: 200;
   fill: var(--color-1-light);
-  -webkit-animation: move 35s linear 30s infinite backwards;
-  -moz-animation: move 35s linear 30s infinite backwards;
-  -o-animation: move 35s linear 30s infinite backwards;
-  animation: move 35s linear 30s infinite backwards;
+  -webkit-animation: move 55s linear 30s infinite backwards;
+  -moz-animation: move 55s linear 30s infinite backwards;
+  -o-animation: move 55s linear 30s infinite backwards;
+  animation: move 55s linear 30s infinite backwards;
 }
 
 .cloud7 {
@@ -242,10 +242,10 @@ export default {
   z-index: 200;
   opacity: 0.3;
   fill: var(--color-1-light);
-  -webkit-animation: move 35s linear 30s infinite backwards;
-  -moz-animation: move 35s linear 30s infinite backwards;
-  -o-animation: move 35s linear 30s infinite backwards;
-  animation: move 35s linear 30s infinite backwards;
+  -webkit-animation: move 60s linear 30s infinite backwards;
+  -moz-animation: move 60s linear 30s infinite backwards;
+  -o-animation: move 60s linear 30s infinite backwards;
+  animation: move 60s linear 30s infinite backwards;
 }
 
 @-webkit-keyframes move {
@@ -253,7 +253,7 @@ export default {
     transform: translateX(-400px);
   }
   to {
-    transform: translateX(1350px);
+    transform: translateX(2000px);
   }
 }
 </style>
