@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Clouds />
     <Panel />
     <div class="github-link">
       <a href="https://github.com/shayaulman/elevator-simulation" target="_blank">
@@ -37,6 +38,7 @@
 import Panel from "./components/Panel";
 import Elevator from "./components/Elevator";
 import ElevatorButtons from "./components/ElevatorButtons";
+import Clouds from "./components/Clouds";
 
 export default {
   data() {
@@ -48,7 +50,8 @@ export default {
   components: {
     Panel,
     Elevator,
-    ElevatorButtons
+    ElevatorButtons,
+    Clouds
   }
 };
 </script>

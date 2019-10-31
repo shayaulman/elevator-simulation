@@ -18,7 +18,7 @@
           />
           <div class="control-buttons">
             <button class="increment" @click="increment()">&#9650;</button>
-            <button class="go-button" @click="goTo(index)">Go</button>
+            <button class="go-button" @click.13="goTo(index)">Go</button>
             <button @click="decrement()" class="decrement">&#9660;</button>
           </div>
 
