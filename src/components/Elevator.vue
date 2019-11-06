@@ -1,11 +1,25 @@
 <template>
   <div class="container">
     <p class="elevator-number">{{ index + 1 }}</p>
-    <div class="control" :class="state">
+    <div class="screen" :class="state">
+      <span
+        class="up-arrow"
+        :class="[{traveling : state === 'goingUp'},{both : state === 'open' || state === 'waiting'}]"
+      >&#9650;</span>
       <strong>{{ control.toFixed() }}</strong>
+      <span
+        class="down-arrow"
+        :class="[{traveling : state === 'goingDown'},{both : state === 'open' || state === 'waiting'}]"
+      >&#9660;</span>
     </div>
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="elevatorHeight">
+        <div
+          v-for="(elevator,i) in elevatorSystem.numOfFloors"
+          :key="i"
+          :style="{height:`${elevatorSystem.floorHeight}px`}"
+          class="floor-number"
+        >{{i}}</div>
         <div class="room" :style="roomHeight">
           <input
             placeholder="..."
@@ -25,11 +39,17 @@
           <div
             class="left-door"
             :class="[state === 'open' || state === 'waiting' ? 'open-doors' : '']"
-          ></div>
+          >
+            <span>{{target}}</span>
+          </div>
           <div
             class="right-door"
             :class="[state === 'open' || state === 'waiting' ? 'open-doors' : '']"
-          ></div>
+          >
+            <span
+              class="info-on-door"
+            >{{ state !== 'free' && state !== 'open' && state !== 'arrived' && state !== 'waiting' ? target > floor / elevatorSystem.floorHeight ? '&#9650;': '&#9660;' : ''}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -44,6 +64,7 @@ export default {
     floorHeight: Number,
     floor: Number,
     state: String,
+    target: [Number, String],
     control: Number
   },
 
@@ -102,26 +123,43 @@ export default {
   align-items: center;
   margin: 1px;
 
-  .control {
+  .screen {
+    font-family: "ZCOOL QingKe HuangYou", cursive;
+    display: flex;
+    justify-content: space-between;
     margin: 12px 10%;
     background-color: var(--color-1);
-    padding: 6px 20px;
+    padding: 6px 10px;
     border-radius: 3px;
     text-align: center;
     color: var(--color-3);
     font-size: 14px;
+    width: 80px;
+
+    .up-arrow,
+    .down-arrow {
+      color: var(--color-5);
+    }
+
+    .up-arrow {
+      margin-right: 10px;
+    }
+
+    .down-arrow {
+      margin-left: 10px;
+    }
   }
 
   .elevator-number {
-    margin: 0 auto;
+    font-family: "Sniglet", cursive;
     margin: 0;
-    padding: 8px 14px;
-    font-size: 12px;
-    width: fit-content;
+    padding: 6px 12px;
+    font-size: 11px;
     text-align: center;
-    color: var(--color-5);
+    color: black;
     border-radius: 50%;
-    background-color: var(--color-3-op);
+    background-color: var(--color-2-op);
+    border: 6px solid var(--color-1);
   }
 }
 
@@ -132,10 +170,22 @@ export default {
 }
 
 .elevator {
+  display: flex;
+  flex-direction: column-reverse;
   position: absolute;
   margin: 0 35%;
   width: 35%;
   background-color: var(--color-3);
+}
+
+.floor-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "ZCOOL QingKe HuangYou", cursive;
+  font-size: 120%;
+  color: var(--color-2);
+  opacity: 0.3;
 }
 
 .room {
@@ -202,14 +252,33 @@ export default {
   }
 }
 
+.traveling {
+  animation: blink-traveling-arrow 0.5s step-end infinite alternate;
+}
+
+.both {
+  color: var(--color-3) !important;
+}
+
 .right-door,
 .left-door {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8px;
+  background-color: var(--color-3);
+  // border-radius: 50%;
+  color: var(--color-2);
   width: 49%;
   height: 100%;
   background-color: var(--color-1);
   bottom: 0;
   z-index: 1;
   transition: all 1s ease-in;
+
+  .info-on-door {
+    animation: blink-traveling-arrow 0.5s step-end infinite alternate;
+  }
 }
 
 .open-doors {
@@ -218,13 +287,10 @@ export default {
 }
 .free,
 .open,
-.waiting {
+.waiting,
+.goingDown,
+.goingUp {
   border: 0.8px solid transparent;
-}
-
-.goingUp,
-.goingDown {
-  animation: blink-traveling 0.5s step-end infinite alternate;
 }
 
 .arrived {

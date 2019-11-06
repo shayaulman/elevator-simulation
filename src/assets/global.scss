@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Sniglet|ZCOOL+QingKe+HuangYou&display=swap');
+
 :root {
 
   --color-1: #2a363b;
@@ -9,7 +11,7 @@
   --color-6: #727a80;
   --color-5-dark: #1e2629;
 
-  --color-2-op: #e84a5fe5;
+  --color-2-op: #e84a5fc7;
   --color-3-op: #ff857c75;
 }
 
@@ -27,11 +29,21 @@ body {
 
 @keyframes blink-traveling {
   0% {
-    border: 0.8px solid transparent;
+    border: 1px solid var(--color-3-op);
   }
 
   50% {
-    border: 0.8px solid orange;
+    border: 1px solid var(--color-2);
+  }
+}
+
+@keyframes blink-traveling-arrow {
+  0% {
+    color: var(--color-5);
+  }
+
+  50% {
+    color: var(--color-3);
   }
 }
 

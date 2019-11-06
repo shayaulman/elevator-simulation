@@ -60,6 +60,7 @@ export default class ElevatorSystem {
   }
 
   goToFloor(elevator, fromFloor, toFloor) {
+    elevator.target = toFloor;
     if (toFloor > this.numOfFloors - 1 || toFloor < 0) {
       alert(`There's only ${this.numOfFloors - 1} floors in this building...`);
       this.holdDoors(elevator.num);
@@ -118,7 +119,6 @@ export default class ElevatorSystem {
   }
 
   closeDoorsAndGo(i, toFloor) {
-    console.log(toFloor);
     // if ordered elevator and did'n use
     setTimeout(() => {
       this.closeDoors(i);

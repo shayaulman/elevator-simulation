@@ -33,10 +33,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  position: fixed;
+  position: absolute;
   padding: 5px;
-  left: 0;
-  bottom: 5vh;
+  left: -0;
+  bottom: 50px;
   background-color: var(--color-3);
   border-radius: 0 6px 6px 0;
   z-index: 3;
