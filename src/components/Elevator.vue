@@ -27,12 +27,13 @@
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
             @input="elevatorSystem.holdDoors(index, $event.target.value)"
+            @keyup.enter="e => goTo(index)"
             min="0"
             :max="elevatorSystem.numOfFloors-1"
           />
           <div class="control-buttons">
             <button class="increment" @click="increment()">&#9650;</button>
-            <button class="go-button" @click.13="goTo(index)">Go</button>
+            <button class="go-button" @click="goTo(index)">Go</button>
             <button @click="decrement()" class="decrement">&#9660;</button>
           </div>
 
@@ -111,6 +112,10 @@ export default {
         i,
         this.$el.querySelector(".floor-input").value
       );
+      setTimeout(
+        () => (this.$el.querySelector(".floor-input").value = ""),
+        1000
+      );
     }
   }
 };
@@ -167,6 +172,7 @@ export default {
   position: relative;
   min-width: 120px;
   background-color: var(--color-2);
+  // transition: all 0.1s ease-in;
 }
 
 .elevator {

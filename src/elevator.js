@@ -1,9 +1,10 @@
 export default class ElevatorSystem {
-  constructor(numOfFloors, numOfElevators) {
+  constructor(numOfFloors = 12, numOfElevators = 3) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
     this.floorHeight = 40;
     this.elevators = this.initElevators();
+    this.queue = [];
   }
 
   initElevators() {
@@ -21,10 +22,11 @@ export default class ElevatorSystem {
 
   callElevator(toFloor) {
     // this.elevators.forEach(e => console.log(e.state));
-    if (
-      this.elevators.filter(elevator => elevator.state === "free").length === 0
-    ) {
-      console.log("no available elvators...");
+    if (this.freeElevators().length === 0 && !this.isInQueue(toFloor)) {
+      console.log("Putting in queue...");
+      this.putInQueue(toFloor);
+      console.log(this.queue);
+      this.watchForFreeElevators();
       return false;
     }
 
@@ -136,6 +138,39 @@ export default class ElevatorSystem {
     }
   }
 
+  /*  Helper functions  */
+
+  freeElevators() {
+    return this.elevators.filter(elevator => elevator.state === "free");
+  }
+
+  /*  Queue handling  */
+
+  watchForFreeElevators() {
+    const watch = setInterval(() => {
+      if (this.freeElevators().length > 0) {
+        this.callElevator(this.queue[0]);
+        this.removeFromQueue(this.queue[0]);
+        clearInterval(watch);
+      } else {
+        console.log("watching...");
+      }
+    }, 500);
+  }
+
+  isInQueue(elevator) {
+    return this.queue.includes(elevator);
+  }
+
+  putInQueue(elevator) {
+    this.queue.push(elevator);
+  }
+
+  removeFromQueue(elevator) {
+    const index = this.queue.indexOf(elevator);
+    this.queue.splice(index, 1);
+  }
+
   /*  UI state handlers  */
 
   addElevator() {
@@ -148,6 +183,7 @@ export default class ElevatorSystem {
   }
 
   removeElevator() {
+    if (this.elevators.length < 4) return;
     this.elevators.pop();
   }
 
@@ -156,10 +192,22 @@ export default class ElevatorSystem {
   }
 
   removeFloor() {
+    if (this.numOfFloors < 3) return;
     this.numOfFloors--;
+    this.outOfRange();
   }
 
   updateFloorHeight(updatedHeight) {
     this.floorHeight = updatedHeight;
+  }
+
+  outOfRange() {
+    for (let i = 0; i < this.elevators.length; i++) {
+      if (this.elevators[i].onFloor > this.numOfFloors - 1) {
+        this.elevators[i].onFloor = Math.floor(
+          Math.random() * this.numOfFloors
+        );
+      }
+    }
   }
 }

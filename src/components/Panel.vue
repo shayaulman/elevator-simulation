@@ -2,11 +2,23 @@
   <div class="panel">
     <p class="floor-info">{{elevatorSystem.numOfFloors-1}}</p>
     <span>Floors</span>
-    <button @click="elevatorSystem.addFloor()">+</button>
-    <button @click="elevatorSystem.removeFloor()">-</button>
+    <button
+      :disabled="elevatorSystem.elevators.some(elevator => elevator.state !== 'free')"
+      @click="elevatorSystem.addFloor()"
+    >+</button>
+    <button
+      :disabled="elevatorSystem.elevators.some(elevator => elevator.state !== 'free')"
+      @click="elevatorSystem.removeFloor()"
+    >-</button>
     <span>Elevators</span>
-    <button @click="elevatorSystem.addElevator()">+</button>
-    <button @click="elevatorSystem.removeElevator()">-</button>
+    <button
+      :disabled="elevatorSystem.elevators.some(elevator => elevator.state !== 'free')"
+      @click="elevatorSystem.addElevator()"
+    >+</button>
+    <button
+      :disabled="elevatorSystem.elevators.some(elevator => elevator.state !== 'free')"
+      @click="elevatorSystem.removeElevator()"
+    >-</button>
     <span>Floor</span>
     <span>Height</span>
     <input

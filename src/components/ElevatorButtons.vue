@@ -8,35 +8,29 @@
     >
       <button
         class="call-button"
-        :class="[{open : elevatorSystem.elevators.some(elevator => elevator.onFloor === i && elevator.state === 'open')},
-         elevatorSystem.elevators.some(elevator => elevator.target === i) ? 'coming' : '']"
+        :class="[{open : elevatorSystem.elevators.some(elevator => elevator.onFloor === i && elevator.state === 'open' || elevator.onFloor === i && elevator.state === 'waiting')},
+         {inQueue : elevatorSystem.queue.includes(i)},elevatorSystem.elevators.some(elevator => elevator.target === i) ? 'coming' : '']"
         @click="elevatorSystem.callElevator(i)"
       >
         <span>&#9650;</span>
         <span>&#9660;</span>
       </button>
-      <div class="info">
-        <span class="info-1">{{freeElevators}}</span>
-        elevators to your service!
-      </div>
+      <Screen :index="i" />
     </div>
   </div>
 </template>
 
 <script>
+import Screen from "./Screen";
 export default {
+  props: ["state"],
   data() {
     return {
       elevatorSystem: this.$store.state.elevatorSystem
     };
   },
-
-  computed: {
-    freeElevators() {
-      return this.elevatorSystem.elevators.filter(
-        elevator => elevator.state === "free"
-      ).length;
-    }
+  components: {
+    Screen
   }
 };
 </script>
@@ -86,24 +80,15 @@ export default {
     }
   }
 }
-
-.info {
-  margin: 1px 0 1px 12px;
-  font-size: 12px;
-  padding: 6px;
-  background-color: var(--color-1);
-  border-radius: 3px;
-  color: var(--color-6);
-
-  .info-1 {
-    color: var(--color-3-op);
-  }
-}
 .open {
-  border: 1px solid green;
+  border: 1px solid green !important;
 }
 
 .coming {
   animation: blink-traveling 0.5s step-end infinite alternate;
+}
+
+.inQueue {
+  border: 1px solid red !important;
 }
 </style>
