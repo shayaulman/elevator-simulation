@@ -33,6 +33,7 @@ export default class ElevatorSystem {
     if (this.elevators.some(elevator => elevator.target === toFloor)) {
       return false;
     }
+    console.log("queue tese");
 
     const freeElevators = this.elevators.filter(
       elevator => elevator.state === "free"
@@ -93,10 +94,11 @@ export default class ElevatorSystem {
       }
 
       // bad approach fix
-      if (
-        elevator.onFloor.toFixed(6) === 0 ||
-        elevator.onFloor.toFixed(6) === this.numOfFloors
-      ) {
+      if (elevator.onFloor.toFixed(6) < 0) {
+        this.resetElevator(elevator, "down");
+        clearInterval(move);
+      } else if (elevator.onFloor.toFixed(6) > this.numOfFloors) {
+        this.resetElevator(elevator, "up");
         clearInterval(move);
       }
 
@@ -142,6 +144,16 @@ export default class ElevatorSystem {
 
   freeElevators() {
     return this.elevators.filter(elevator => elevator.state === "free");
+  }
+
+  resetElevator(elevator, direction) {
+    elevator.target = "";
+    elevator.state = "free";
+    if (direction === "up") {
+      elevator.onFloor = this.numOfFloors;
+    } else {
+      elevator.onFloor = 0;
+    }
   }
 
   /*  Queue handling  */

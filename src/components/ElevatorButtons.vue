@@ -17,6 +17,12 @@
       </button>
       <Screen :index="i" />
     </div>
+    <h3 class="smart-info">
+      <!-- <span>&copy;</span> -->
+      Smart
+      <font-awesome-icon icon="info-circle" />
+      {{' '}}elevator system
+    </h3>
   </div>
 </template>
 
@@ -36,6 +42,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .buttons-container {
+  position: relative;
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-start;
@@ -90,5 +97,18 @@ export default {
 
 .inQueue {
   border: 1px solid red !important;
+}
+
+.smart-info {
+  padding: 6px;
+  margin-left: 70px;
+  border-radius: 10px;
+  width: 190px;
+  font-size: 10px;
+  text-align: center;
+  color: var(--color-1);
+  background-color: var(--color-2-op);
+  border: 3px solid var(--color-1);
+  // opacity: 0.6;
 }
 </style>

@@ -9,7 +9,7 @@
       v-else-if="elevatorSystem.elevators.some(elevator => elevator.onFloor === index)"
     >elevator {{elevatorOnFloor(index)}} is ready</span>
 
-    <span v-else-if="freeElevators == 0">All are engaged 😥</span>
+    <span v-else-if="freeElevators == 0">All elevators are engaged 😥</span>
     <span v-else>{{freeElevators}} elevator{{freeElevators > 1 ? 's are' : ' is'}} free!</span>
     <!-- <span>{{message(index)}}</span> -->
   </div>

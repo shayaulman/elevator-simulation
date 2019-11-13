@@ -2,13 +2,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import store from "./store/Vuex";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSortUp } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import "./assets/global.scss";
 
-library.add(faSortUp);
-
+library.add(faInfoCircle);
 Vue.config.productionTip = false;
 
 new Vue({
