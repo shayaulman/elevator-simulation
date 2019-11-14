@@ -1,17 +1,29 @@
 <template>
-  <div class="info">
+  <div class="info" :style="{direction: lang === 'en' ? 'ltr' : 'rtl'}">
+    <span v-if="elevatorSystem.elevators.some(elevator => elevator.target === index)">
+      {{lang === 'en' ? 'elevator' : 'מעלית'}}
+      <span class="number">{{arriving(index)}}</span>
+      {{lang === 'en' ? 'is on the way...' : 'בדרך...'}}
+    </span>
     <span
-      v-if="elevatorSystem.elevators.some(elevator => elevator.target === index)"
-    >elevator {{arriving(index)}} is on the way...</span>
-    <span v-else-if="elevatorSystem.queue.includes(index)">In queue...</span>
+      v-else-if="elevatorSystem.queue.includes(index)"
+    >{{lang === 'en' ? 'In queue...' : 'בתור...'}}</span>
+
+    <span v-else-if="elevatorSystem.elevators.some(elevator => elevator.onFloor === index)">
+      {{lang === 'en' ? 'elevator' : 'מעלית'}}
+      <span class="number">{{elevatorOnFloor(index)}}</span>
+      {{lang === 'en' ? 'is ready' : 'מוכנה'}}
+    </span>
 
     <span
-      v-else-if="elevatorSystem.elevators.some(elevator => elevator.onFloor === index)"
-    >elevator {{elevatorOnFloor(index)}} is ready</span>
-
-    <span v-else-if="freeElevators == 0">All elevators are engaged 😥</span>
-    <span v-else>{{freeElevators}} elevator{{freeElevators > 1 ? 's are' : ' is'}} free!</span>
-    <!-- <span>{{message(index)}}</span> -->
+      v-else-if="freeElevators == 0"
+    >{{lang === 'en' ? 'All elevators are engaged :(' : 'כל המעליות תפוסות :('}}</span>
+    <span v-else>
+      <span class="number">{{freeElevators}}</span>
+      {{lang === 'en' ? 'elevator' : freeElevators > 1 ? 'מעלית' : 'מעליות'}}
+      {{lang === 'en' ? freeElevators > 1 ? 's are' : ' is' : ''}}
+      {{lang === 'en' ? 'free!' : freeElevators > 1 ? 'פנויות!' : 'פנוי!'}}
+    </span>
   </div>
 </template>
 
@@ -26,15 +38,14 @@ export default {
     };
   },
 
-  mounted() {
-    // this.infoMessage = this.message();
-  },
-
   computed: {
     freeElevators: function() {
       return this.elevatorSystem.elevators.filter(
         elevator => elevator.state === "free"
       ).length;
+    },
+    lang() {
+      return this.$store.state.lang;
     }
   },
   methods: {
@@ -56,7 +67,8 @@ export default {
 
 <style lang="scss" scoped>
 .info {
-  width: 250px;
+  margin-left: 50px;
+  width: 200px;
   text-align: center;
   margin: 1px 0 1px 12px;
   font-size: 12px;
@@ -67,6 +79,25 @@ export default {
 
   .info-1 {
     color: var(--color-3-op);
+  }
+
+  .number {
+    color: var(--color-3-op);
+  }
+
+  span {
+    transition: info 0.5s step-end infinite alternate;
+  }
+}
+
+@keyframes info {
+  0% {
+    margin-left: -25px;
+    opacity: 1;
+  }
+  90% {
+    margin-left: 0;
+    opacity: 0.5;
   }
 }
 </style>

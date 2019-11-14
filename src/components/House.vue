@@ -1,9 +1,12 @@
 <template>
   <div class="house-container">
     <div class="roof-1"></div>
-    <div
-      class="roof-2"
-    >Still under development, unexpected and weird things can happen very frequently, working on that :)</div>
+    <div class="roof-2" :style="{direction: lang === 'en' ? 'ltr' : 'rtl'}">
+      {{
+      lang === 'en' ? 'Call an elevator, enter a floor number & click the "GO" button, or hit "enter"!'
+      : 'הזמן מעלית, הכנס מספר קומה, ולחץ על GO, או על "enter"!'
+      }}
+    </div>
 
     <div class="house" ref="house">
       <Elevator
@@ -36,6 +39,11 @@ export default {
   components: {
     Elevator,
     ElevatorButtons
+  },
+  computed: {
+    lang() {
+      return this.$store.state.lang;
+    }
   }
 };
 </script>
@@ -67,7 +75,7 @@ export default {
   height: 30px;
   width: 120%;
   text-align: center;
-  color: var(--color-1);
+  color: #ff857c3d;
   font-size: 14px;
   font-weight: 100;
   padding: 4px;

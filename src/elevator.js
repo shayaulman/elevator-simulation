@@ -1,10 +1,11 @@
 export default class ElevatorSystem {
-  constructor(numOfFloors = 12, numOfElevators = 3) {
+  constructor(numOfFloors, numOfElevators) {
     this.numOfFloors = numOfFloors;
     this.numOfElevators = numOfElevators;
     this.floorHeight = 40;
     this.elevators = this.initElevators();
     this.queue = [];
+    this.goButtonPressed = false;
   }
 
   initElevators() {
@@ -14,7 +15,7 @@ export default class ElevatorSystem {
         num: i,
         onFloor: Math.floor(Math.random() * this.numOfFloors),
         target: "",
-        state: "free" // 'goingUp', 'goingDown', 'open',
+        state: "free" // 'goingUp', 'goingDown', 'open' 'waiting',
       };
     }
     return elevators;
@@ -23,9 +24,8 @@ export default class ElevatorSystem {
   callElevator(toFloor) {
     // this.elevators.forEach(e => console.log(e.state));
     if (this.freeElevators().length === 0 && !this.isInQueue(toFloor)) {
-      console.log("Putting in queue...");
+      // console.log("Putting in queue...");
       this.putInQueue(toFloor);
-      console.log(this.queue);
       this.watchForFreeElevators();
       return false;
     }
@@ -33,7 +33,6 @@ export default class ElevatorSystem {
     if (this.elevators.some(elevator => elevator.target === toFloor)) {
       return false;
     }
-    console.log("queue tese");
 
     const freeElevators = this.elevators.filter(
       elevator => elevator.state === "free"
@@ -57,8 +56,11 @@ export default class ElevatorSystem {
               Math.abs(a.onFloor - toFloor) - Math.abs(b.onFloor - toFloor)
             );
           })[0];
-
-    bestChoise.target = toFloor;
+    if (bestChoise.target !== "") {
+      return;
+    }
+    // bestChoise.target = toFloor;
+    // console.log(bestChoise.target);
     this.goToFloor(bestChoise, bestChoise.onFloor, toFloor);
   }
 
@@ -86,7 +88,7 @@ export default class ElevatorSystem {
 
     //wait 1/2 second to indicate call of elevator
     const move = setInterval(() => {
-      elevator;
+      // console.log(elevator.state);
       if (elevator.state === "goingUp") {
         elevator.onFloor += 0.1;
       } else {
@@ -97,7 +99,7 @@ export default class ElevatorSystem {
       if (elevator.onFloor.toFixed(6) < 0) {
         this.resetElevator(elevator, "down");
         clearInterval(move);
-      } else if (elevator.onFloor.toFixed(6) > this.numOfFloors) {
+      } else if (elevator.onFloor.toFixed(6) > this.numOfFloors + 1) {
         this.resetElevator(elevator, "up");
         clearInterval(move);
       }
@@ -106,47 +108,63 @@ export default class ElevatorSystem {
         elevator.onFloor = +elevator.onFloor.toFixed();
         clearInterval(move);
         elevator.state = "arrived";
+        if (this.isInQueue(elevator.target)) {
+          console.log("hello");
+          this.removeFromQueue(elevator);
+        }
         elevator.target = "";
         setTimeout(() => (elevator.state = "open"), 500);
-        setTimeout(() => (elevator.state = "free"), 6000);
+        setTimeout(() => this.updateElevatorState(elevator), 6000);
       }
     }, 100);
   }
 
   updateElevatorState(elevator) {
-    if (elevator.state !== "waiting") elevator.state = "free";
+    // if (elevator.state !== "waiting") elevator.state = "free";
+
+    if (elevator.state === "open") {
+      // console.log("updateElevatorState func is called");
+      elevator.state = "free";
+    }
   }
 
-  holdDoors(i, value) {
-    console.log(value);
+  holdDoors(i) {
     this.elevators[i].state = "waiting";
   }
 
   closeDoorsAndGo(i, toFloor) {
     // if ordered elevator and did'n use
-    setTimeout(() => {
-      this.closeDoors(i);
-    }, 10000);
+    // setTimeout(() => {
+    //   this.closeDoors(i);
+    // }, 10000);
     if (toFloor === "") return;
-    this.elevators[i].state = "free";
+    // this.elevators[i].state = "free";
+    this.goButtonPressed = false;
     setTimeout(() => {
       this.goToFloor(this.elevators[i], this.elevators[i].onFloor, +toFloor);
     }, 800);
   }
 
-  closeDoors(i) {
-    if (this.elevators[i].state === "waiting") {
+  closeDoors(i, goButton) {
+    if (goButton) return;
+    if (this.elevators[i].state === "waiting" && !this.goButtonPressed) {
       this.elevators[i].state = "free";
+      console.log("closeDoors func is called");
     }
   }
 
   /*  Helper functions  */
 
   freeElevators() {
-    return this.elevators.filter(elevator => elevator.state === "free");
+    const freeElevators = this.elevators.filter(
+      elevator => elevator.state === "free"
+    );
+    console.log(freeElevators);
+    return freeElevators;
   }
 
   resetElevator(elevator, direction) {
+    console.log("reset func called");
     elevator.target = "";
     elevator.state = "free";
     if (direction === "up") {
@@ -160,12 +178,17 @@ export default class ElevatorSystem {
 
   watchForFreeElevators() {
     const watch = setInterval(() => {
+      if (watching) return;
+      let watching;
       if (this.freeElevators().length > 0) {
+        console.log("found free elevator!");
         this.callElevator(this.queue[0]);
         this.removeFromQueue(this.queue[0]);
         clearInterval(watch);
+        watching = false;
       } else {
-        console.log("watching...");
+        watching = true;
+        console.log("watching...", watching);
       }
     }, 500);
   }
@@ -195,7 +218,7 @@ export default class ElevatorSystem {
   }
 
   removeElevator() {
-    if (this.elevators.length < 4) return;
+    if (this.elevators.length < 3) return;
     this.elevators.pop();
   }
 

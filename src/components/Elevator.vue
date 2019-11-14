@@ -15,7 +15,7 @@
     <div class="elevator-con" ref="con" :style="shaftStyle">
       <div class="elevator" :style="elevatorHeight">
         <div
-          v-for="(elevator,i) in elevatorSystem.numOfFloors"
+          v-for="(elevator, i) in elevatorSystem.numOfFloors"
           :key="i"
           :style="{height:`${elevatorSystem.floorHeight}px`}"
           class="floor-number"
@@ -26,10 +26,13 @@
             class="floor-input"
             type="number"
             @focus="elevatorSystem.holdDoors(index)"
+            @focusout="elevatorSystem.closeDoors(index)"
             @input="elevatorSystem.holdDoors(index, $event.target.value)"
             @keyup.enter="e => goTo(index)"
+            @click="debug(index)"
             min="0"
             :max="elevatorSystem.numOfFloors-1"
+            :disabled="state === 'goingDown' || state === 'goingUp'"
           />
           <div class="control-buttons">
             <button class="increment" @click="increment()">&#9650;</button>
@@ -108,6 +111,7 @@ export default {
     },
 
     goTo(i) {
+      this.elevatorSystem.goButtonPressed = true;
       this.elevatorSystem.closeDoorsAndGo(
         i,
         this.$el.querySelector(".floor-input").value
@@ -116,11 +120,15 @@ export default {
         () => (this.$el.querySelector(".floor-input").value = ""),
         1000
       );
+    },
+    debug(i) {
+      console.log(this.elevatorSystem.elevators[i].target);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css?family=Sniglet|ZCOOL+QingKe+HuangYou&display=swap");
 .container {
   display: flex;
   flex-direction: column;
@@ -129,7 +137,7 @@ export default {
   margin: 1px;
 
   .screen {
-    font-family: "ZCOOL QingKe HuangYou", cursive;
+    font-family: "ZCOOL QingKe HuangYou";
     display: flex;
     justify-content: space-between;
     margin: 12px 10%;
@@ -156,7 +164,7 @@ export default {
   }
 
   .elevator-number {
-    font-family: "Sniglet", cursive;
+    font-family: "Sniglet";
     margin: 0;
     padding: 6px 12px;
     font-size: 11px;
@@ -188,10 +196,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "ZCOOL QingKe HuangYou", cursive;
+  font-family: "ZCOOL QingKe HuangYou";
   font-size: 120%;
   color: var(--color-2);
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .room {
@@ -273,14 +281,13 @@ export default {
   align-items: center;
   font-size: 8px;
   background-color: var(--color-3);
-  // border-radius: 50%;
   color: var(--color-2);
-  width: 49%;
+  width: 48.2%;
   height: 100%;
   background-color: var(--color-1);
   bottom: 0;
   z-index: 1;
-  transition: all 1s ease-in;
+  transition: all 0.65s ease-in;
 
   .info-on-door {
     animation: blink-traveling-arrow 0.5s step-end infinite alternate;
@@ -289,7 +296,7 @@ export default {
 
 .open-doors {
   width: 4%;
-  transition: all 1s ease-in;
+  transition: all 0.65s ease-in;
 }
 .free,
 .open,

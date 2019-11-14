@@ -17,17 +17,23 @@
       </button>
       <Screen :index="i" />
     </div>
-    <h3 class="smart-info">
-      <!-- <span>&copy;</span> -->
-      Smart
-      <font-awesome-icon icon="info-circle" />
-      {{' '}}elevator system
-    </h3>
+
+    <div class="smart-info">
+      <font-awesome-icon
+        class="fas"
+        icon="info-circle"
+        :class="{infoProccesing : elevatorSystem.elevators.some(elevator => elevator.state !== 'free')}"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Screen from "./Screen";
+library.add(faInfoCircle);
 export default {
   props: ["state"],
   data() {
@@ -36,7 +42,8 @@ export default {
     };
   },
   components: {
-    Screen
+    Screen,
+    FontAwesomeIcon
   }
 };
 </script>
@@ -100,15 +107,47 @@ export default {
 }
 
 .smart-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 6px;
-  margin-left: 70px;
+  margin-left: 40px;
   border-radius: 10px;
-  width: 190px;
+  width: 200px;
   font-size: 10px;
-  text-align: center;
-  color: var(--color-1);
-  background-color: var(--color-2-op);
-  border: 3px solid var(--color-1);
-  // opacity: 0.6;
+
+  .circle-text {
+    display: flex;
+
+    span {
+      height: 200px;
+      position: absolute;
+      width: 20px;
+      left: 0;
+      top: 0;
+      transform-origin: bottom center;
+    }
+  }
+
+  .fas {
+    font-size: 50px;
+    color: var(--color-2);
+    padding: 10px;
+  }
+
+  .infoProccesing {
+    animation: info-proccesing 1s infinite;
+  }
+}
+
+@keyframes info-proccesing {
+  0% {
+    font-size: 50px;
+  }
+
+  70% {
+    font-size: 52px;
+  }
 }
 </style>
