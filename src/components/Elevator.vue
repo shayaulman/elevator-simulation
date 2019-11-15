@@ -29,14 +29,13 @@
             @focusout="elevatorSystem.closeDoors(index)"
             @input="elevatorSystem.holdDoors(index, $event.target.value)"
             @keyup.enter="e => goTo(index)"
-            @click="debug(index)"
             min="0"
             :max="elevatorSystem.numOfFloors-1"
-            :disabled="state === 'goingDown' || state === 'goingUp'"
+            :disabled="state == 'goingDown' || state === 'goingUp' || state === 'free'"
           />
           <div class="control-buttons">
             <button class="increment" @click="increment()">&#9650;</button>
-            <button class="go-button" @click="goTo(index)">Go</button>
+            <button class="go-button" @click="goTo(index)">{{lang === 'en' ? 'Go' : 'סע'}}</button>
             <button @click="decrement()" class="decrement">&#9660;</button>
           </div>
 
@@ -100,6 +99,9 @@ export default {
         height: `${this.elevatorSystem.floorHeight}px`,
         bottom: `${this.floor}px`
       };
+    },
+    lang() {
+      return this.$store.state.lang;
     }
   },
   methods: {
@@ -120,9 +122,6 @@ export default {
         () => (this.$el.querySelector(".floor-input").value = ""),
         1000
       );
-    },
-    debug(i) {
-      console.log(this.elevatorSystem.elevators[i].target);
     }
   }
 };
@@ -172,7 +171,7 @@ export default {
     color: black;
     border-radius: 50%;
     background-color: var(--color-2-op);
-    border: 6px solid var(--color-1);
+    border: 3px solid var(--color-1);
   }
 }
 
@@ -180,7 +179,6 @@ export default {
   position: relative;
   min-width: 120px;
   background-color: var(--color-2);
-  // transition: all 0.1s ease-in;
 }
 
 .elevator {
@@ -220,8 +218,10 @@ export default {
     overflow: hidden;
 
     .go-button {
+      font-family: "Varela Round";
       color: var(--color-3);
       font-size: 10px;
+      height: 100%;
 
       &:hover {
         color: var(--color-2);
@@ -287,7 +287,7 @@ export default {
   background-color: var(--color-1);
   bottom: 0;
   z-index: 1;
-  transition: all 0.65s ease-in;
+  transition: all 0.5s ease-in;
 
   .info-on-door {
     animation: blink-traveling-arrow 0.5s step-end infinite alternate;

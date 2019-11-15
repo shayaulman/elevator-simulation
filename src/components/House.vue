@@ -3,8 +3,8 @@
     <div class="roof-1"></div>
     <div class="roof-2" :style="{direction: lang === 'en' ? 'ltr' : 'rtl'}">
       {{
-      lang === 'en' ? 'Call an elevator, enter a floor number & click the "GO" button, or hit "enter"!'
-      : 'הזמן מעלית, הכנס מספר קומה, ולחץ על GO, או על "enter"!'
+      lang === 'en' ? 'Call an elevator, enter a floor number & click the "GO" button, or hit Enter!'
+      : 'הזמן מעלית, הכנס מספר קומה, לחץ על "סע", או על מקש Enter!'
       }}
     </div>
 
@@ -76,8 +76,8 @@ export default {
   width: 120%;
   text-align: center;
   color: #ff857c3d;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 100;
-  padding: 4px;
+  padding: 8px;
 }
 </style>

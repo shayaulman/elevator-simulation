@@ -141,7 +141,7 @@ export default {
   methods: {
     random() {
       return (
-        Math.floor(Math.random() * (Math.floor(200) - Math.ceil(-100) + 1)) +
+        Math.floor(Math.random() * (Math.floor(120) - Math.ceil(-100) + 1)) +
         Math.ceil(-100)
       );
     }

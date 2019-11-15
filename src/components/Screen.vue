@@ -2,9 +2,14 @@
   <div class="info" :style="{direction: lang === 'en' ? 'ltr' : 'rtl'}">
     <span v-if="elevatorSystem.elevators.some(elevator => elevator.target === index)">
       {{lang === 'en' ? 'elevator' : 'מעלית'}}
-      <span class="number">{{arriving(index)}}</span>
-      {{lang === 'en' ? 'is on the way...' : 'בדרך...'}}
+      <span class="number">{{arriving(index).num}}</span>
+      {{lang === 'en' ? 'will arrive in ' : 'מגיע בעוד'}}
+      <span
+        class="number"
+      >{{arriving(index).seconds > 1 ? arriving(index).seconds : ''}}</span>
+      {{lang === 'en' ? arriving(index).seconds > 1 ? 'seconds' : 'a second' : arriving(index).seconds > 1 ? 'שניות' : 'שניה'}}
     </span>
+
     <span
       v-else-if="elevatorSystem.queue.includes(index)"
     >{{lang === 'en' ? 'In queue...' : 'בתור...'}}</span>
@@ -12,17 +17,17 @@
     <span v-else-if="elevatorSystem.elevators.some(elevator => elevator.onFloor === index)">
       {{lang === 'en' ? 'elevator' : 'מעלית'}}
       <span class="number">{{elevatorOnFloor(index)}}</span>
-      {{lang === 'en' ? 'is ready' : 'מוכנה'}}
+      {{lang === 'en' ? 'is ready' : 'מוכנה!'}}
     </span>
 
     <span
-      v-else-if="freeElevators == 0"
+      v-else-if="freeElevators === 0"
     >{{lang === 'en' ? 'All elevators are engaged :(' : 'כל המעליות תפוסות :('}}</span>
     <span v-else>
       <span class="number">{{freeElevators}}</span>
-      {{lang === 'en' ? 'elevator' : freeElevators > 1 ? 'מעלית' : 'מעליות'}}
+      {{lang === 'en' ? 'elevator' : freeElevators > 1 ? 'מעליות' : 'מעלית'}}
       {{lang === 'en' ? freeElevators > 1 ? 's are' : ' is' : ''}}
-      {{lang === 'en' ? 'free!' : freeElevators > 1 ? 'פנויות!' : 'פנוי!'}}
+      {{lang === 'en' ? 'free' : freeElevators > 1 ? 'פנויות' : 'פנויה'}}
     </span>
   </div>
 </template>
@@ -33,7 +38,6 @@ export default {
   data() {
     return {
       elevatorSystem: this.$store.state.elevatorSystem,
-      // infoMessage: "",
       num: 2
     };
   },
@@ -53,7 +57,8 @@ export default {
       const elevatorOnWay = this.elevatorSystem.elevators.filter(
         e => e.target === floor
       );
-      return elevatorOnWay[0].num + 1;
+      const seconds = Math.abs(elevatorOnWay[0].onFloor - floor).toFixed();
+      return { num: elevatorOnWay[0].num + 1, seconds: seconds };
     },
     elevatorOnFloor(floor) {
       const elevatorOnFloor = this.elevatorSystem.elevators.filter(
@@ -68,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .info {
   margin-left: 50px;
-  width: 200px;
+  width: 220px;
   text-align: center;
   margin: 1px 0 1px 12px;
   font-size: 12px;

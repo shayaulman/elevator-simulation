@@ -137,17 +137,18 @@ export default {
   }
 
   .infoProccesing {
-    animation: info-proccesing 1s infinite;
+    font-size: 50px;
+    animation: info-proccesing 1.2s ease-in-out infinite;
   }
 }
 
 @keyframes info-proccesing {
   0% {
-    font-size: 50px;
+    transform: scale(0.95);
   }
 
   70% {
-    font-size: 52px;
+    transform: scale(1.15);
   }
 }
 </style>

@@ -30,8 +30,8 @@
         <span class="slider round" />
       </label>
       <div class="lang-label">
-        <span>🇮🇱</span>
-        <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁧󠁢󠁥󠁮</span>
+        <img src="../assets/il-flag.png" width="14" height="10" />
+        <img src="../assets/en-flag.png" width="14" height="10" />
       </div>
     </div>
   </div>
@@ -57,7 +57,6 @@ export default {
         "toggleLang",
         this.$store.state.lang === "en" ? "he" : "en"
       );
-      console.log(this.$store.state.lang);
     }
   }
 };
@@ -93,7 +92,7 @@ export default {
   button {
     margin: 1px;
     padding: 6px 9px;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--color-2);
     background-color: var(--color-1);
     border: none;
@@ -101,7 +100,7 @@ export default {
     cursor: pointer;
 
     &:disabled {
-      background-color: var(--color-1-light);
+      opacity: 0.75;
       cursor: not-allowed;
     }
 
@@ -141,11 +140,11 @@ export default {
 
   .lang-label {
     display: flex;
-    margin: 4px;
+    margin: 0 4px;
 
-    span {
-      margin: 0 4px;
-      font-size: 18px;
+    img {
+      margin: 4px;
+      font-size: 16px;
     }
   }
 }
@@ -181,7 +180,7 @@ export default {
   height: 12px;
   width: 12px;
   left: 4px;
-  bottom: 3px;
+  bottom: 2.8px;
   background-color: var(--color-2);
   -webkit-transition: 0.2s;
   transition: 0.2s;
@@ -189,13 +188,11 @@ export default {
 input:checked {
   background-color: var(--color-2);
 }
-// input:focus + .slider {
-//   box-shadow: 001pxlightgreen;
-// }
+
 input:checked + .slider:before {
-  -webkit-transform: translateX(12px);
-  -ms-transform: translateX(12px);
-  transform: translateX(12px);
+  -webkit-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  transform: translateX(10px);
 } /*Roundedsliders*/
 .slider.round {
   border-radius: 34px;
